@@ -1,0 +1,1 @@
+./node_modules/.bin/jsdoc.cmd ./js -t ./node_modules/ink-docstrap/template -c jsdoc-config.json -d ./docs

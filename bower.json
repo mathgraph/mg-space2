@@ -1,0 +1,19 @@
+{
+  "name": "space2",
+  "version": "0.0.0",
+  "authors": [
+    "sivsais <sivsais@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "paper": "~0.9.23",
+    "dat-gui": "~0.5.1"
+  }
+}
