@@ -13,7 +13,8 @@
     "tests"
   ],
   "dependencies": {
+    "dat.gui": "*",
     "paper": "~0.9.23",
-    "dat-gui": "~0.5.1"
+    "requirejs": "~2.1.20"
   }
 }

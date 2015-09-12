@@ -1,4 +1,4 @@
-(function (space2) {
+define(['mg-space2/utils/vec2'], function (vec2) {
 
     /**
      * @class Point
@@ -43,7 +43,7 @@
             get r() {
                 var x = self.x - polar.center[0],
                     y = self.y - polar.center[1];
-                return space2.utils.vec2.length(x, y) * polar.scale;
+                return vec2.length(x, y) * polar.scale;
             },
             set r(v) {
                 v /= polar.scale;
@@ -53,7 +53,7 @@
             get phi() {
                 var x = self.x - polar.center[0],
                     y = self.y - polar.center[1];
-                return space2.utils.vec2.angle(x, y);
+                return vec2.angle(x, y);
             },
             set phi(v) {
                 var r = this.r / polar.scale;
@@ -82,20 +82,20 @@
 
         return {
             get x() {
-                var vec = space2.utils.vec2.product([self.x, self.y], affine.to_local);
+                var vec = vec2.product([self.x, self.y], affine.to_local);
                 return vec[0];
             },
             set x(v) {
-                var vec = space2.utils.vec2.product([v, this.y], affine.to_global);
+                var vec = vec2.product([v, this.y], affine.to_global);
                 self.x = vec[0];
                 self.y = vec[1]
             },
             get y() {
-                var vec = space2.utils.vec2.product([self.x, self.y], affine.to_local);
+                var vec = vec2.product([self.x, self.y], affine.to_local);
                 return vec[1];
             },
             set y(v) {
-                var vec = space2.utils.vec2.product([this.x, v], affine.to_global);
+                var vec = vec2.product([this.x, v], affine.to_global);
                 self.x = vec[0];
                 self.y = vec[1];
             }
@@ -107,11 +107,11 @@
      * @method space2.make_point
      * @returns {Point}
      */
-    space2.make_point = function () {
+    return function make_point() {
         var point = Object.create(prototype);
         point.x = 0;
         point.y = 0;
         return point;
     };
 
-})(space2);
+});

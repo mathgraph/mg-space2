@@ -1,4 +1,4 @@
-(function (space2) {
+define(function () {
 
     /**
      * @class Axes
@@ -68,7 +68,7 @@
      * @throws Throws error with message 'Invalid axes type' when type is incorrect
      * @returns {Axes.Affine | Axes.Polar}
      */
-    space2.make_axes = function (type) {
+    return function make_axes(type) {
         if (type === 'affine') {
             return make_affine_axes();
         }
@@ -77,4 +77,4 @@
         }
         throw new Error('Invalid axes type: ' + type);
     };
-})(space2);
+})

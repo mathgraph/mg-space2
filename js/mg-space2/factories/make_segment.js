@@ -1,4 +1,4 @@
-(function (space2) {
+define(['mg-space2/utils/vec2'], function (vec2) {
 
     /**
      * @class Segment
@@ -55,7 +55,7 @@
                     get r() {
                         var x = self.point1.x - polar.center[0],
                             y = self.point1.y - polar.center[1];
-                        return space2.utils.vec2.length(x, y) * polar.scale;
+                        return vec2.length(x, y) * polar.scale;
                     },
                     set r(v){
                         v /= polar.scale;
@@ -65,7 +65,7 @@
                     get phi() {
                         var x = self.point1.x - polar.center[0],
                             y = self.point1.y - polar.center[1];
-                        return space2.utils.vec2.angle(x, y);
+                        return vec2.angle(x, y);
                     },
                     set phi(v){
                         var r = this.r / polar.scale;
@@ -79,7 +79,7 @@
                     get r() {
                         var x = self.point2.x - polar.center[0],
                             y = self.point2.y - polar.center[1];
-                        return space2.utils.vec2.length(x, y) * polar.scale;
+                        return vec2.length(x, y) * polar.scale;
                     },
                     set r(v){
                         v /= polar.scale;
@@ -89,7 +89,7 @@
                     get phi() {
                         var x = self.point2.x - polar.center[0],
                             y = self.point2.y - polar.center[1];
-                        return space2.utils.vec2.angle(x, y);
+                        return vec2.angle(x, y);
                     },
                     set phi(v){
                         var r = this.r / polar.scale;
@@ -128,18 +128,18 @@
                 return {
                     get x() {
 
-                        return space2.utils.vec2.product([self.point1.x, self.point1.y], affine.to_local)[0];
+                        return vec2.product([self.point1.x, self.point1.y], affine.to_local)[0];
                     },
                     set x(v){
-                        vec = space2.utils.vec2.product([v, self.point1.y], affine.to_global);
+                        vec = vec2.product([v, self.point1.y], affine.to_global);
                         self.point1.x = vec[0];
                         self.point1.y = vec[1]
                     },
                     get y() {
-                        return space2.utils.vec2.product([self.point1.x, self.point1.y], affine.to_local)[1];
+                        return vec2.product([self.point1.x, self.point1.y], affine.to_local)[1];
                     },
                     set y(v){
-                        vec = space2.utils.vec2.product([self.point1.x, v], affine.to_global);
+                        vec = vec2.product([self.point1.x, v], affine.to_global);
                         self.point1.x = vec[0];
                         self.point1.y = vec[1]
                     }
@@ -149,18 +149,18 @@
                 var vec;
                 return {
                     get x() {
-                        return space2.utils.vec2.product([self.point2.x, self.point2.y], affine.to_local)[0];
+                        return vec2.product([self.point2.x, self.point2.y], affine.to_local)[0];
                     },
                     set x(v){
-                        vec = space2.utils.vec2.product([v, self.point2.y], affine.to_global);
+                        vec = vec2.product([v, self.point2.y], affine.to_global);
                         self.point2.x = vec[0];
                         self.point2.y = vec[1]
                     },
                     get y() {
-                        return space2.utils.vec2.product([self.point2.x, self.point2.y], affine.to_local)[1];
+                        return vec2.product([self.point2.x, self.point2.y], affine.to_local)[1];
                     },
                     set y(v){
-                        vec = space2.utils.vec2.product([self.point2.x, v], affine.to_global);
+                        vec = vec2.product([self.point2.x, v], affine.to_global);
                         self.point2.x = vec[0];
                         self.point2.y = vec[1]
                     }
@@ -173,7 +173,7 @@
      * @method space2.make_segment
      * @returns {Segment}
      */
-    space2.make_segment = function () {
+    return function make_segment() {
         var segment = Object.create(prototype);
         segment.point1 = {};
         segment.point2 = {};
@@ -185,4 +185,4 @@
         return segment;
     };
 
-})(space2);
+});
