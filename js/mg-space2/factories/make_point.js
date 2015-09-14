@@ -6,7 +6,8 @@ define(['mg-space2/utils/vec2'], function (vec2) {
      * @property {Number} x
      * @property {Number} y
      */
-    var prototype = {};
+    var prototype, make_polar_project, make_affine_project;
+    prototype = {};
     /**
      * Point projection factory
      * @method Point.make_project
@@ -29,7 +30,7 @@ define(['mg-space2/utils/vec2'], function (vec2) {
      * @param {Axes.Polar} polar
      * @returns {Point.PolarProjection}
      */
-    var make_polar_project = function (polar) {
+    make_polar_project = function (polar) {
         var self = this;
 
         /**
@@ -70,7 +71,7 @@ define(['mg-space2/utils/vec2'], function (vec2) {
      * @param {Axes.Affine} affine
      * @returns {Point.AffineProjection}
      */
-    var make_affine_project = function (affine) {
+    make_affine_project = function (affine) {
         var self = this;
 
         /**

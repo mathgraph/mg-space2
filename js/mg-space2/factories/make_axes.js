@@ -4,13 +4,14 @@ define(function () {
      * @class Axes
      * @classdesc Coordinate systems for space2
      */
-    var prototype = {};
+    var prototype, make_affine_axes, make_polar_axes;
+    prototype = {};
 
     /**
      * Affine axes factory
      * @returns {Axes.Affine}
      */
-    var make_affine_axes = function () {
+    make_affine_axes = function () {
         /**
          * @typedef {Object} Axes.Affine
          * @property {String} type 'affine' Read-Only
@@ -19,7 +20,9 @@ define(function () {
          * @property {Matrix2x2} to_global transformation matrix from local to global axes
          */
         return {
-            get type() { return 'affine'; },
+            get type() {
+                return 'affine';
+            },
             basis: [[1, 0], [0, 1]],
             get to_local() {
                 return [
@@ -28,8 +31,8 @@ define(function () {
                 ]
             },
             get to_global() {
-                var m = this.to_local;
-                var a = m[0][0],
+                var m = this.to_local,
+                    a = m[0][0],
                     b = m[0][1],
                     c = m[1][0],
                     d = m[1][1],
@@ -46,7 +49,7 @@ define(function () {
      * Polar axes factory
      * @returns {Axes.Polar}
      */
-    var make_polar_axes = function () {
+    make_polar_axes = function () {
         /**
          * @typedef {Object} Axes.Polar
          * @property {String} type 'polar' Read-Only

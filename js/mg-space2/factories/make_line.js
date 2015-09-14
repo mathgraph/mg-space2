@@ -2,7 +2,8 @@
 
 
 
-    var prototype = {};
+    var prototype, make_polar_project, make_affine_project;
+    prototype = {};
 
 
     prototype.make_project = function (axes) {
@@ -16,7 +17,7 @@
     };
 
 
-    var make_polar_project = function (polar) {
+    make_polar_project = function (polar) {
         var self = this;
 
         return {
@@ -27,7 +28,7 @@
                             y = self.point1.y - polar.center[1];
                         return space2.utils.vec2.length(x, y) * polar.scale;
                     },
-                    set r(v){
+                    set r(v) {
                         v /= polar.scale;
                         self.point1.x = Math.cos(this.phi) * v + polar.center[0];
                         self.point1.y = Math.sin(this.phi) * v + polar.center[1];
@@ -37,7 +38,7 @@
                             y = self.point1.y - polar.center[1];
                         return space2.utils.vec2.angle(x, y);
                     },
-                    set phi(v){
+                    set phi(v) {
                         var r = this.r / polar.scale;
                         self.point1.x = Math.cos(v) * r + polar.center[0];
                         self.point1.y = Math.sin(v) * r + polar.center[1];
@@ -51,7 +52,7 @@
                             y = self.point2.y - polar.center[1];
                         return space2.utils.vec2.length(x, y) * polar.scale;
                     },
-                    set r(v){
+                    set r(v) {
                         v /= polar.scale;
                         self.point2.x = Math.cos(this.phi) * v + polar.center[0];
                         self.point2.y = Math.sin(this.phi) * v + polar.center[1];
@@ -61,7 +62,7 @@
                             y = self.point2.y - polar.center[1];
                         return space2.utils.vec2.angle(x, y);
                     },
-                    set phi(v){
+                    set phi(v) {
                         var r = this.r / polar.scale;
                         self.point2.x = Math.cos(v) * r + polar.center[0];
                         self.point2.y = Math.sin(v) * r + polar.center[1];
@@ -69,7 +70,7 @@
                 };
             },
             set polar_canonical(params) {
-                var rho, theta, r , phi;
+                var rho, theta, r, phi;
                 rho = params.rho;
                 theta = params.theta;
                 r = rho;
@@ -99,7 +100,7 @@
     };
 
 
-    var make_affine_project = function (affine) {
+    make_affine_project = function (affine) {
         var self = this;
 
 
@@ -112,7 +113,7 @@
 
                         return space2.utils.vec2.product([self.point1.x, self.point1.y], affine.to_local)[0];
                     },
-                    set x(v){
+                    set x(v) {
                         vec = space2.utils.vec2.product([v, self.point1.y], affine.to_global);
                         self.point1.x = vec[0];
                         self.point1.y = vec[1]
@@ -120,7 +121,7 @@
                     get y() {
                         return space2.utils.vec2.product([self.point1.x, self.point1.y], affine.to_local)[1];
                     },
-                    set y(v){
+                    set y(v) {
                         vec = space2.utils.vec2.product([self.point1.x, v], affine.to_global);
                         self.point1.x = vec[0];
                         self.point1.y = vec[1]
@@ -133,7 +134,7 @@
                     get x() {
                         return space2.utils.vec2.product([self.point2.x, self.point2.y], affine.to_local)[0];
                     },
-                    set x(v){
+                    set x(v) {
                         vec = space2.utils.vec2.product([v, self.point2.y], affine.to_global);
                         self.point2.x = vec[0];
                         self.point2.y = vec[1]
@@ -141,7 +142,7 @@
                     get y() {
                         return space2.utils.vec2.product([self.point2.x, self.point2.y], affine.to_local)[1];
                     },
-                    set y(v){
+                    set y(v) {
                         vec = space2.utils.vec2.product([self.point2.x, v], affine.to_global);
                         self.point2.x = vec[0];
                         self.point2.y = vec[1]
@@ -153,7 +154,7 @@
                 A = params.A;
                 B = params.B;
                 C = params.C;
-                if(B){
+                if (B) {
                     vec = space2.utils.vec2.product([0, -C / B], affine.to_global);
                     self.point1.x = vec[0];
                     self.point1.y = vec[1];
@@ -161,15 +162,15 @@
                     self.point2.x = vec[0];
                     self.point2.y = vec[1];
                 } else {
-                    if(A) {
-                        vec = space2.utils.vec2.product([ -C / A, 0], affine.to_global);
+                    if (A) {
+                        vec = space2.utils.vec2.product([-C / A, 0], affine.to_global);
                         self.point1.x = vec[0];
                         self.point1.y = vec[1];
                         vec = space2.utils.vec2.product([-(C + B) / A, 1], affine.to_global);
                         self.point2.x = vec[0];
                         self.point2.y = vec[1];
-                    }else{
-                        throw new Error("Такой прямой не существует")
+                    }else {
+                        throw new Error("пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ")
                     }
                 }
             },
