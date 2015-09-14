@@ -1,14 +1,6 @@
 {
   "name": "mg-space2",
   "version": "0.0.1",
-  "main": [
-    "js/mg-space2/factories/make_axes.js",
-    "js/mg-space2/factories/make_point.js",
-    "js/mg-space2/factories/segment.js",
-    "js/mg-space2/utils/utils.js",
-    "js/mg-space2/utils/vec2.js"
-
-  ],
   "authors": [
     "sivsais <sivsais@gmail.com>"
   ],
