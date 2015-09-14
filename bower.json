@@ -1,6 +1,9 @@
 {
   "name": "space2",
-  "version": "0.0.0",
+  "version": "0.0.1",
+  "main": [
+    "js/*"
+  ],
   "authors": [
     "sivsais <sivsais@gmail.com>"
   ],
@@ -14,7 +17,9 @@
   ],
   "dependencies": {
     "dat.gui": "*",
-    "paper": "~0.9.23",
     "requirejs": "~2.1.20"
+  },
+  "devDependencies": {
+    "paper": "~0.9.23"
   }
 }
