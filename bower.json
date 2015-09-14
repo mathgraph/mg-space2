@@ -1,5 +1,5 @@
 {
-  "name": "space2",
+  "name": "mg-space2",
   "version": "0.0.1",
   "main": [
     "js/mg-space2/factories/make_axes.js",
