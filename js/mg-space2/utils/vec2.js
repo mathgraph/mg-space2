@@ -43,6 +43,24 @@ define(function () {
                 mat2[0][0] * vec2[0] + mat2[0][1] * vec2[1],
                 mat2[1][0] * vec2[0] + mat2[1][1] * vec2[1]
             ];
+        },
+        subtraction: function (v1, v2) {
+            return [
+                v1[0] - v2[0],
+                v1[1] - v2[1]
+            ]
+        },
+        translate: function (v, delta) {
+            return [
+                [
+                    v[0][0] + delta[0],
+                    v[0][1] + delta[1]
+                ],
+                [
+                    v[1][0] + delta[0],
+                    v[1][1] + delta[1]
+                ]
+            ]
         }
 
     }

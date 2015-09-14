@@ -290,28 +290,37 @@ require(['mg-space2'], function (space2) {
 //        })
 
     var global = gui.addFolder('Global');
-    var point1_x_controller = global.add(my_segment.point1, 'x', -300, 300).listen();
-    var point1__y_controller = global.add(my_segment.point1, 'y', -300, 300).listen();
-    var point2_x_controller = global.add(my_segment.point2, 'x', -300, 300).listen();
-    var point2__y_controller = global.add(my_segment.point2, 'y', -300, 300).listen();
-    point1_x_controller.onChange(update);
-    point1__y_controller.onChange(update);
-    point2_x_controller.onChange(update);
-    point2__y_controller.onChange(update);
+    //var point1_x_controller = global.add(my_segment.point1, 'x', -300, 300).listen();
+    //var point1__y_controller = global.add(my_segment.point1, 'y', -300, 300).listen();
+    //var point2_x_controller = global.add(my_segment.point2, 'x', -300, 300).listen();
+    //var point2__y_controller = global.add(my_segment.point2, 'y', -300, 300).listen();
+    //point1_x_controller.onChange(update);
+    //point1__y_controller.onChange(update);
+    //point2_x_controller.onChange(update);
+    //point2__y_controller.onChange(update);
+    //var point1_x_controller = global.add(my_segment, 'angle', -300, 300).listen();
+    //var point1_y_controller = global.add(my_point, 'length', -300, 300).listen();
+    //point1_x_controller.onChange(update);
+    //point1_y_controller.onChange(update);
     global.open();
+
 
     segment_projections.forEach(function (proj, index) {
         var t = systems[index].type;
         var f = gui.addFolder(index);
         if (t == 'affine') {
-            var point1_x_controller = f.add(proj.point1, 'x', -300, 300).listen();
-            var point1_y_controller = f.add(proj.point1, 'y', -300, 300).listen();
-            var point2_x_controller = f.add(proj.point2, 'x', -300, 300).listen();
-            var point2_y_controller = f.add(proj.point2, 'y', -300, 300).listen();
+            //var point1_x_controller = f.add(proj.point1, 'x', -300, 300).listen();
+            //var point1_y_controller = f.add(proj.point1, 'y', -300, 300).listen();
+            //var point2_x_controller = f.add(proj.point2, 'x', -300, 300).listen();
+            //var point2_y_controller = f.add(proj.point2, 'y', -300, 300).listen();
+            //point1_x_controller.onChange(update);
+            //point1_y_controller.onChange(update);
+            //point2_x_controller.onChange(update);
+            //point2_y_controller.onChange(update);
+            var point1_x_controller = f.add(proj, 'angle', -300, 300).listen();
+            var point1_y_controller = f.add(proj, 'length', -300, 300).listen();
             point1_x_controller.onChange(update);
             point1_y_controller.onChange(update);
-            point2_x_controller.onChange(update);
-            point2_y_controller.onChange(update);
         } else {
             var point1_r_controller = f.add(proj.point1, 'r', 0, 300).listen();
             var point1_phi_controller = f.add(proj.point1, 'phi', -Math.PI, Math.PI).listen();
