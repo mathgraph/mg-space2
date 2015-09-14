@@ -15,10 +15,10 @@
     "tests"
   ],
   "dependencies": {
-    "dat.gui": "*",
-    "requirejs": "~2.1.20"
+    "dat.gui": "*"
   },
   "devDependencies": {
-    "paper": "~0.9.23"
+    "paper": "~0.9.23",
+    "requirejs": "~2.1.20"
   }
 }
