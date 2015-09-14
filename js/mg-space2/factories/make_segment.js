@@ -37,7 +37,7 @@ define(['mg-space2/utils/vec2'], function (vec2) {
      * @param {Axes.Polar} polar
      * @returns {Segment.PolarProjection}
      */
-    var make_polar_project = function (polar) {
+    function make_polar_project(polar) {
         var self = this;
         /**
          * Segment projection to polar axes
@@ -57,7 +57,7 @@ define(['mg-space2/utils/vec2'], function (vec2) {
                             y = self.point1.y - polar.center[1];
                         return vec2.length(x, y) * polar.scale;
                     },
-                    set r(v){
+                    set r(v) {
                         v /= polar.scale;
                         self.point1.x = Math.cos(this.phi) * v + polar.center[0];
                         self.point1.y = Math.sin(this.phi) * v + polar.center[1];
@@ -67,7 +67,7 @@ define(['mg-space2/utils/vec2'], function (vec2) {
                             y = self.point1.y - polar.center[1];
                         return vec2.angle(x, y);
                     },
-                    set phi(v){
+                    set phi(v) {
                         var r = this.r / polar.scale;
                         self.point1.x = Math.cos(v) * r + polar.center[0];
                         self.point1.y = Math.sin(v) * r + polar.center[1];
@@ -81,7 +81,7 @@ define(['mg-space2/utils/vec2'], function (vec2) {
                             y = self.point2.y - polar.center[1];
                         return vec2.length(x, y) * polar.scale;
                     },
-                    set r(v){
+                    set r(v) {
                         v /= polar.scale;
                         self.point2.x = Math.cos(this.phi) * v + polar.center[0];
                         self.point2.y = Math.sin(this.phi) * v + polar.center[1];
@@ -91,7 +91,7 @@ define(['mg-space2/utils/vec2'], function (vec2) {
                             y = self.point2.y - polar.center[1];
                         return vec2.angle(x, y);
                     },
-                    set phi(v){
+                    set phi(v) {
                         var r = this.r / polar.scale;
                         self.point2.x = Math.cos(v) * r + polar.center[0];
                         self.point2.y = Math.sin(v) * r + polar.center[1];
@@ -100,7 +100,7 @@ define(['mg-space2/utils/vec2'], function (vec2) {
             }
 
         }
-    };
+    }
 
     /**
      * Segment projection factory for affine axes
@@ -108,7 +108,7 @@ define(['mg-space2/utils/vec2'], function (vec2) {
      * @param {Axes.Affine} affine
      * @returns {Segment.AffineProjection}
      */
-    var make_affine_project = function (affine) {
+    function make_affine_project(affine) {
         var self = this;
 
         /**
@@ -127,19 +127,18 @@ define(['mg-space2/utils/vec2'], function (vec2) {
                 var vec;
                 return {
                     get x() {
-
                         return vec2.product([self.point1.x, self.point1.y], affine.to_local)[0];
                     },
-                    set x(v){
-                        vec = vec2.product([v, self.point1.y], affine.to_global);
+                    set x(v) {
+                        vec = vec2.product([v, this.y], affine.to_global);
                         self.point1.x = vec[0];
                         self.point1.y = vec[1]
                     },
                     get y() {
                         return vec2.product([self.point1.x, self.point1.y], affine.to_local)[1];
                     },
-                    set y(v){
-                        vec = vec2.product([self.point1.x, v], affine.to_global);
+                    set y(v) {
+                        vec = vec2.product([this.x, v], affine.to_global);
                         self.point1.x = vec[0];
                         self.point1.y = vec[1]
                     }
@@ -151,23 +150,33 @@ define(['mg-space2/utils/vec2'], function (vec2) {
                     get x() {
                         return vec2.product([self.point2.x, self.point2.y], affine.to_local)[0];
                     },
-                    set x(v){
-                        vec = vec2.product([v, self.point2.y], affine.to_global);
+                    set x(v) {
+                        vec = vec2.product([v, this.y], affine.to_global);
                         self.point2.x = vec[0];
                         self.point2.y = vec[1]
                     },
                     get y() {
                         return vec2.product([self.point2.x, self.point2.y], affine.to_local)[1];
                     },
-                    set y(v){
-                        vec = vec2.product([self.point2.x, v], affine.to_global);
+                    set y(v) {
+                        vec = vec2.product([this.x, v], affine.to_global);
                         self.point2.x = vec[0];
                         self.point2.y = vec[1]
                     }
                 };
+            },
+            set point2(value) {
+                var vec = vec2.product([value.x, value.y], affine.to_global);
+                self.point2.x = vec[0];
+                self.point2.y = vec[1]
+            },
+            set point1(value) {
+                var vec = vec2.product([value.x, value.y], affine.to_global);
+                self.point1.x = vec[0];
+                self.point1.y = vec[1]
             }
         }
-    };
+    }
     /**
      * Segment factory
      * @method space2.make_segment
