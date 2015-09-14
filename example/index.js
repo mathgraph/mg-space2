@@ -1,5 +1,5 @@
 require.config({
-    baseUrl: './js',
+    baseUrl: '../src',
     packages: [
         {
             name: 'mg-space2',
