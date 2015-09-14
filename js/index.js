@@ -4,7 +4,7 @@ require.config({
         {
             name: 'mg-space2',
             location: './mg-space2',
-            main: 'mg-space2'
+            main: 'space2/space2'
         }
     ]
 });
