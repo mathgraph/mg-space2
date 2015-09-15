@@ -1,18 +1,33 @@
 define(['mg-space2/utils/vec2'], function (vec2) {
+    /**
+     * Line projection factory for affine axes
+     * @this Line
+     * @param {Axes.Affine} affine
+     * @returns {Line.AffineProjection}
+     */
     return function (affine) {
         var self = this;
 
+        /**
+         * Line projection to affine axes
+         * @typedef {Object} Line.AffineProjection
+         * @property {object} point1
+         * @property {Number} point1.x
+         * @property {Number} point1.y
+         * @property {object} point2
+         * @property {Number} point2.x
+         * @property {Number} point2.y
+         */
 
         return {
             get point1() {
                 var vec;
                 return {
                     get x() {
-
                         return vec2.product([self.point1.x, self.point1.y], affine.to_local)[0];
                     },
                     set x(v) {
-                        vec = vec2.product([v, self.point1.y], affine.to_global);
+                        vec = vec2.product([v, this.y], affine.to_global);
                         self.point1.x = vec[0];
                         self.point1.y = vec[1]
                     },
@@ -20,7 +35,7 @@ define(['mg-space2/utils/vec2'], function (vec2) {
                         return vec2.product([self.point1.x, self.point1.y], affine.to_local)[1];
                     },
                     set y(v) {
-                        vec = vec2.product([self.point1.x, v], affine.to_global);
+                        vec = vec2.product([this.x, v], affine.to_global);
                         self.point1.x = vec[0];
                         self.point1.y = vec[1]
                     }
@@ -33,7 +48,7 @@ define(['mg-space2/utils/vec2'], function (vec2) {
                         return vec2.product([self.point2.x, self.point2.y], affine.to_local)[0];
                     },
                     set x(v) {
-                        vec = vec2.product([v, self.point2.y], affine.to_global);
+                        vec = vec2.product([v, this.y], affine.to_global);
                         self.point2.x = vec[0];
                         self.point2.y = vec[1]
                     },
@@ -41,13 +56,30 @@ define(['mg-space2/utils/vec2'], function (vec2) {
                         return vec2.product([self.point2.x, self.point2.y], affine.to_local)[1];
                     },
                     set y(v) {
-                        vec = vec2.product([self.point2.x, v], affine.to_global);
+                        vec = vec2.product([this.x, v], affine.to_global);
                         self.point2.x = vec[0];
                         self.point2.y = vec[1]
                     }
                 };
             },
-            set canonical(params) {
+            set point2(value) {
+                var vec = vec2.product([value.x, value.y], affine.to_global);
+                self.point2.x = vec[0];
+                self.point2.y = vec[1]
+            },
+            set point1(value) {
+                var vec = vec2.product([value.x, value.y], affine.to_global);
+                self.point1.x = vec[0];
+                self.point1.y = vec[1]
+            },
+            set translate(v) {
+                var vec = vec2.product([this.point1.x + v.x, this.point1.y + v.y], affine.to_global);
+                self.point1.x = vec[0];
+                self.point1.y = vec[1];
+                vec = vec2.product([this.point2.x + v.x, this.point2.y + v.y], affine.to_global);
+                self.point2.x = vec[0];
+                self.point2.y = vec[1]
+            },            set canonical(params) {
                 var A, B, C, vec;
                 A = params.A;
                 B = params.B;
@@ -68,7 +100,7 @@ define(['mg-space2/utils/vec2'], function (vec2) {
                         self.point2.x = vec[0];
                         self.point2.y = vec[1];
                     } else {
-                        throw new Error("����� ������ �� ����������")
+                        throw new Error("????? ?????? ?? ??????????")
                     }
                 }
             },
@@ -104,7 +136,6 @@ define(['mg-space2/utils/vec2'], function (vec2) {
                 b = point1[1] - k * point1[0];
                 return {k: k, b: b}
             }
-
         }
-    };
+    }
 });
