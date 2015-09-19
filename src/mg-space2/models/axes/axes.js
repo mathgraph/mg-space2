@@ -1,4 +1,4 @@
-define(function () {
+define(['mg-space2/utils/vec2'], function (vec2) {
 
     /**
      * @class Axes
@@ -19,11 +19,21 @@ define(function () {
          * @property {Matrix2x2} to_local transformation matrix from global to local axes
          * @property {Matrix2x2} to_global transformation matrix from local to global axes
          */
+        var $_basis = [[1, 0], [0, 1]];
         return {
             get type() {
                 return 'affine';
             },
-            basis: [[1, 0], [0, 1]],
+            get basis() {
+                return $_basis
+            },
+            set basis(b) {
+                if (vec2.isCollinear(b[0], b[1])) {
+                    console.warn('Collinear vectors in basis. Setting interrupted.');
+                } else {
+                    $_basis = b;
+                }
+            },
             get to_local() {
                 return [
                     this.basis[0],

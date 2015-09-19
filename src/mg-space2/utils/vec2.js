@@ -14,11 +14,14 @@ define(function () {
         /**
          * Возвращает длину радиус-вектора, заданного координатами x и y
          * @memberof space2/utils/vec2
-         * @param {Number} x
+         * @param {Number || Vector2} x
          * @param {Number} y
          * @returns {Number}
          */
         length: function (x, y) {
+            if (typeof x === 'object') {
+                return Math.sqrt(x[0] * x[0] + x[1] * x[1]);
+            }
             return Math.sqrt(x * x + y * y);
         },
         /**
@@ -61,6 +64,12 @@ define(function () {
                     v[1][1] + delta[1]
                 ]
             ]
+        },
+        scalarProduct: function (vec1, vec2) {
+            return vec1[0] * vec2[0] + vec1[1] * vec2[1];
+        },
+        isCollinear: function (vec1, vec2) {
+            return Math.abs(this.scalarProduct(vec1, vec2) / (this.length(vec1) * this.length(vec2))) === 1
         }
 
     }
