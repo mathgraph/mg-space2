@@ -109,9 +109,9 @@ define(['mg-space2/utils/vec2'], function (vec2) {
                 point1 = vec2.product([self.point1.x, self.point1.y], affine.to_local);
                 point2 = vec2.product([self.point2.x, self.point2.y], affine.to_local);
 
-                A = 1 / (point2[1] - point1[1]);
-                B = 1 / (point1[0] - point2[0]);
-                C = -point1[0] * (point2[0] - point1[0]) + point1[1] * (point2[1] - point1[1]);
+                A = point1[0] - point2[0];
+                B = point2[1] - point1[1];
+                C = -point1[0] * A - point1[1] * B;
                 return {A: A, B: B, C: C}
             },
             set angular_coefficient(params) {
