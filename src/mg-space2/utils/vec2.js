@@ -70,6 +70,9 @@ define(function () {
         },
         isCollinear: function (vec1, vec2) {
             return Math.abs(this.scalarProduct(vec1, vec2) / (this.length(vec1) * this.length(vec2))) === 1
+        },
+        isZero: function (vec) {
+            return vec[0] === 0 && vec[1] === 0
         }
 
     }

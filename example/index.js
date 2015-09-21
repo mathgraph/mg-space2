@@ -34,7 +34,7 @@ require(['mg-space2'], function (space2) {
     var systems = [];
 
     systems[0] = space.make_axes('affine');
-    systems[0].basis = [[1, 0], [0, 1]];
+    systems[0].basis = [[1, 0], [0, 0]];
     paper.projects[0].activate();
     var ox0 = new paper.Path.Line({
         from: [-300, 0],
