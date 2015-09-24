@@ -73,7 +73,12 @@ define(function () {
         },
         isZero: function (vec) {
             return vec[0] === 0 && vec[1] === 0
+        },
+        det: function (mat) {
+            return mat[0][0] * mat[1][1] - mat[0][1] * mat[1][0];
+        },
+        isCorrectBasis: function (basis) {
+            return this.det(basis) !== 0 && !this.isCollinear(basis[0], basis[1])
         }
-
     }
 });

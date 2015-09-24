@@ -28,13 +28,17 @@ define(['mg-space2/utils/vec2'], function (vec2) {
                 return $_basis
             },
             set basis(b) {
-                if (vec2.isCollinear(b[0], b[1])) {
-                    console.warn('Collinear vectors in basis. Setting interrupted.');
-                } else if (vec2.isZero(b[0]) || vec2.isZero(b[1])) {
-                    console.warn('Zero vector in basis. Setting interrupted.');
-                } else {
-                    $_basis = b;
+                if (!vec2.isCorrectBasis(b)) {
+                    if (vec2.isCollinear(b[0], b[1])) {
+                        console.warn('Collinear vectors in basis. Setting interrupted.');
+                    } else if (vec2.isZero(b[0]) || vec2.isZero(b[1])) {
+                        console.warn('Zero vector in basis. Setting interrupted.');
+                    } else {
+                        console.warn('Incorrect basis. Setting interrupted.');
+                    }
+                    return;
                 }
+                $_basis = b;
             },
             get to_local() {
                 return [
