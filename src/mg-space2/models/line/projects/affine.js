@@ -79,7 +79,8 @@ define(['mg-space2/utils/vec2'], function (vec2) {
                 vec = vec2.product([this.point2.x + v.x, this.point2.y + v.y], affine.to_global);
                 self.point2.x = vec[0];
                 self.point2.y = vec[1]
-            },            set canonical(params) {
+            },
+            set canonical(params) {
                 var A, B, C, vec;
                 A = params.A;
                 B = params.B;
@@ -100,17 +101,16 @@ define(['mg-space2/utils/vec2'], function (vec2) {
                         self.point2.x = vec[0];
                         self.point2.y = vec[1];
                     } else {
-                        throw new Error("????? ?????? ?? ??????????")
+                        throw new Error("This is not line")
                     }
                 }
             },
             get canonical() {
                 var A, B, C, point1, point2;
                 point1 = vec2.product([self.point1.x, self.point1.y], affine.to_local);
-                point2 = vec2.product([self.point2.x, self.point2.y], affine.to_local);
 
-                A = point1[0] - point2[0];
-                B = point2[1] - point1[1];
+                B = point2[0] - point1[0];
+                A = point1[1] - point2[1];
                 C = -point1[0] * A - point1[1] * B;
                 return {A: A, B: B, C: C}
             },
