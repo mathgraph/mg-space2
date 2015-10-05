@@ -16,24 +16,33 @@ define(['mg-space2/utils/vec2'], function (vec2) {
          */
 
         return {
-            get x() {
+            getX: function () {
                 var vec = vec2.product([self.x, self.y], affine.to_local);
                 return vec[0];
             },
-            set x(v) {
-                var vec = vec2.product([v, this.y], affine.to_global);
+            setX: function (v) {
+                var that = this,
+                    vec = vec2.product([v, that.getY()], affine.to_global);
                 self.x = vec[0];
                 self.y = vec[1]
             },
-            get y() {
+            getY: function () {
                 var vec = vec2.product([self.x, self.y], affine.to_local);
                 return vec[1];
             },
-            set y(v) {
-                var vec = vec2.product([this.x, v], affine.to_global);
+            setY: function (v) {
+                var that = this,
+                    vec = vec2.product([that.getX(), v], affine.to_global);
                 self.x = vec[0];
                 self.y = vec[1];
-            }
+            },
+            update: function () {
+                this.setX(this.x);
+                this.setY(this.y);
+                return this;
+            },
+            x: this.getX(),
+            y: this.getY()
         }
     };
 });

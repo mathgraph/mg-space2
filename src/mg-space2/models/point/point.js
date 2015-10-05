@@ -14,13 +14,31 @@ define(['./projects/polar', './projects/affine'], function (make_polar_project, 
      * @returns {Point.PolarProjection | Point.AffineProjection | Null}
      */
     prototype.make_project = function (axes) {
+        var point = this,
+            proj;
+
+        point.projects = point.projects || [];
+
         switch (axes.type) {
             case 'affine':
-                return make_affine_project.bind(this)(axes);
+                proj = make_affine_project.bind(this)(axes);
+                break;
             case 'polar':
-                return make_polar_project.bind(this)(axes);
+                proj = make_polar_project.bind(this)(axes);
+                break;
         }
-        return null;
+        point.projects.push(proj);
+        return proj || null;
+    };
+
+    prototype.update = function () {
+        var point = this;
+
+        point.projects.forEach(function (proj) {
+            proj.update();
+        });
+
+        return point;
     };
 
     /**

@@ -96,4 +96,4 @@ define(['mg-space2/utils/vec2'], function (vec2) {
         }
         throw new Error('Invalid axes type: ' + type);
     };
-})
+});
