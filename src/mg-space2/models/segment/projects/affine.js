@@ -102,16 +102,16 @@ define(['mg-space2/utils/vec2'], function (vec2) {
 
                 return that;
             },
-            update: function () {
-                var that = this;
-
-                that.getPoint1().update();
-                that.getPoint2().update();
-                that.setLength(that.length)
-                    .setAngle(that.angle);
-
-                return that;
-            },
+            //update: function () {
+            //    var that = this;
+            //
+            //    that.getPoint1().update();
+            //    that.getPoint2().update();
+            //    that.setLength(that.length)
+            //        .setAngle(that.angle);
+            //
+            //    return that;
+            //},
             get point1() {
                 return this.getPoint1();
             },
@@ -125,13 +125,13 @@ define(['mg-space2/utils/vec2'], function (vec2) {
                 this.setPoint2(v);
             },
             get angle() {
-                return this.getAngle
+                return this.getAngle()
             },
             set angle(v) {
                 this.setAngle(v)
             },
             get length() {
-                return this.getLength
+                return this.getLength()
             },
             set length(v) {
                 this.setLength(v)

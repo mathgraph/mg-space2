@@ -92,16 +92,16 @@ define(['mg-space2/utils/vec2'], function (vec2) {
                 b = point1.getY() - k * point1.getX();
                 return {k: k, b: b}
             },
-            update: function () {
-                var that = this;
-
-                that.getPoint1().update();
-                that.getPoint2().update();
-                that.setAngularCoefficient(that.angularCoefficient)
-                    .setCanonical(that.canonical);
-
-                return that;
-            },
+            //update: function () {
+            //    var that = this;
+            //
+            //    that.getPoint1().update();
+            //    that.getPoint2().update();
+            //    that.setAngularCoefficient(that.angularCoefficient)
+            //        .setCanonical(that.canonical);
+            //
+            //    return that;
+            //},
             get point1() {
                 return this.getPoint1();
             },
@@ -115,13 +115,13 @@ define(['mg-space2/utils/vec2'], function (vec2) {
                 this.setPoint2(v);
             },
             get canonical() {
-                return this.getCanonical
+                return this.getCanonical()
             },
             set canonical(v) {
                 this.setCanonical(v)
             },
             get angularCoefficient() {
-                return this.getAngularCoefficient
+                return this.getAngularCoefficient()
             },
             set angularCoefficient(v) {
                 this.setAngularCoefficient(v)

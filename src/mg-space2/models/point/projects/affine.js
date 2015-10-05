@@ -37,11 +37,11 @@ define(['mg-space2/utils/vec2'], function (vec2) {
                 self.x = vec[0];
                 self.y = vec[1];
             },
-            update: function () {
-                this.setX(this.x);
-                this.setY(this.y);
-                return this;
-            },
+            //update: function () {
+            //    this.setX(this.x);
+            //    this.setY(this.y);
+            //    return this;
+            //},
             get x() {
                 return this.getX();
             },

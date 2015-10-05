@@ -39,11 +39,11 @@ define(['mg-space2/utils/vec2'], function (vec2) {
                 self.x = Math.cos(v) * r + polar.center[0];
                 self.y = Math.sin(v) * r + polar.center[1];
             },
-            update: function () {
-                this.setR(this.r);
-                this.setPhi(this.phi);
-                return this;
-            },
+            //update: function () {
+            //    this.setR(this.r);
+            //    this.setPhi(this.phi);
+            //    return this;
+            //},
             get r() {
                 return this.getR();
             },

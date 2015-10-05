@@ -45,15 +45,15 @@ define(['mg-space2/utils/vec2'], function (vec2) {
 
                 return that;
             },
-            update: function () {
-                var that = this;
-
-                that.getPoint1().update();
-                that.getPoint2().update();
-
-
-                return that;
-            },
+            //update: function () {
+            //    var that = this;
+            //
+            //    that.getPoint1().update();
+            //    that.getPoint2().update();
+            //
+            //
+            //    return that;
+            //},
             get point1() {
                 return this.getPoint1();
             },

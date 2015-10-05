@@ -77,15 +77,15 @@ define(['mg-space2/utils/vec2'], function (vec2) {
 
                 return that;
             },
-            update: function () {
-                var that = this;
-
-                that.getPoint1().update();
-                that.getPoint2().update();
-                that.setPolarCanonical(that.polarCanonical);
-
-                return that;
-            },
+            //update: function () {
+            //    var that = this;
+            //
+            //    that.getPoint1().update();
+            //    that.getPoint2().update();
+            //    that.setPolarCanonical(that.polarCanonical);
+            //
+            //    return that;
+            //},
             get point1() {
                 return this.getPoint1();
             },
@@ -99,7 +99,7 @@ define(['mg-space2/utils/vec2'], function (vec2) {
                 this.setPoint2(v);
             },
             get polarCanonical() {
-                return this.getCanonical
+                return this.getCanonical()
             },
             set polarCanonical(v) {
                 this.setCanonical(v)
