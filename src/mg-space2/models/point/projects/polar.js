@@ -23,21 +23,27 @@ define(['mg-space2/utils/vec2'], function (vec2) {
                 return vec2.length(x, y) * polar.scale;
             },
             setR: function (v) {
-                var that = this;
+                var that = this,
+                    x, y;
                 v /= polar.scale;
-                self.x = Math.cos(that.getPhi()) * v + polar.center[0];
-                self.y = Math.sin(that.getPhi()) * v + polar.center[1];
+                x = Math.cos(that.getPhi()) * v + polar.center[0];
+                y = Math.sin(that.getPhi()) * v + polar.center[1];
+                self.x = x;
+                self.y = y;
             },
             getPhi: function () {
                 var x = self.x - polar.center[0],
                     y = self.y - polar.center[1];
-                return vec2.angle(x, y) + 0.0;
+                return vec2.angle(x, y);
             },
             setPhi: function (v) {
                 var that = this,
+                    x, y,
                     r = that.getR() / polar.scale;
-                self.x = Math.cos(v) * r + polar.center[0];
-                self.y = Math.sin(v) * r + polar.center[1];
+                x = Math.cos(v) * r + polar.center[0];
+                y = Math.sin(v) * r + polar.center[1];
+                self.x = x;
+                self.y = y;
             },
             //update: function () {
             //    this.setR(this.r);
