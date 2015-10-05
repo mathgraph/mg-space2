@@ -9,40 +9,55 @@ require.config({
     ]
 });
 
-require(['mg-space2'], function (space2) {
 
-    var canvas1 = document.getElementById('canvas1');
-    var canvas2 = document.getElementById('canvas2');
-    var canvas3 = document.getElementById('canvas3');
-    var canvas4 = document.getElementById('canvas4');
+require(['mg-space2'], function (space2) {
+    var space, systems, my_point, i, projections, renders,
+        gui, global, x_controller, y_controller, update;
+
+
+    space = space2;
+    systems = make_axes(space);
+    test_segment(systems, space2);
+
+
+
+});
+
+
+function make_axes(space) {
+    var canvas1, canvas2, canvas3, canvas4, systems, i, s,
+        ox0, ox1, ox2,
+        oy0, oy1, oy2, or;
+
+    canvas1 = document.getElementById('canvas1');
+    canvas2 = document.getElementById('canvas2');
+    canvas3 = document.getElementById('canvas3');
+    canvas4 = document.getElementById('canvas4');
     paper.setup(canvas1);
     paper.setup(canvas2);
     paper.setup(canvas3);
     paper.setup(canvas4);
-
-    var space = space2;
-
-    var my_point = space.make_point();
-    my_point.x = 100;
-    my_point.y = 100;
-
-    var my_segment = space.make_segment();
-    my_segment.point1.x = 10;
-    my_segment.point1.y = 10;
-    my_segment.point2.x = 50;
-    my_segment.point2.y = 50;
-    var systems = [];
+    systems = [];
 
     systems[0] = space.make_axes('affine');
     systems[0].basis = [[1, 0], [0, 0]];
     paper.projects[0].activate();
-    var ox0 = new paper.Path.Line({
+    s = paper.view.viewSize;
+    new paper.PointText({
+        point: [-s.width / 2, -s.height / 2 + 40],
+        content: 0,
+        fillColor: 'green',
+        fontSize: 50
+    });
+    paper.view.center = new paper.Point(0, 0);
+    paper.view.draw();
+    ox0 = new paper.Path.Line({
         from: [-300, 0],
         to: [300, 0],
         strokeWidth: 1,
         strokeColor: 'black'
     });
-    var oy0 = new paper.Path.Line({
+    oy0 = new paper.Path.Line({
         from: [0, -300],
         to: [0, 300],
         strokeWidth: 1,
@@ -74,13 +89,22 @@ require(['mg-space2'], function (space2) {
     systems[1] = space.make_axes('affine');
     systems[1].basis = [[1, 0], [0, -1]];
     paper.projects[1].activate();
-    var ox1 = new paper.Path.Line({
+    s = paper.view.viewSize;
+    new paper.PointText({
+        point: [-s.width / 2, -s.height / 2 + 40],
+        content: 1,
+        fillColor: 'green',
+        fontSize: 50
+    });
+    paper.view.center = new paper.Point(0, 0);
+    paper.view.draw();
+    ox1 = new paper.Path.Line({
         from: [-300, 0],
         to: [300, 0],
         strokeWidth: 1,
         strokeColor: 'black'
     });
-    var oy1 = new paper.Path.Line({
+    oy1 = new paper.Path.Line({
         from: [0, 300],
         to: [0, -300],
         strokeWidth: 1,
@@ -112,13 +136,22 @@ require(['mg-space2'], function (space2) {
     systems[2] = space.make_axes('affine');
     systems[2].basis = [[0, 1], [1, 0]];
     paper.projects[2].activate();
-    var ox2 = new paper.Path.Line({
+    s = paper.view.viewSize;
+    new paper.PointText({
+        point: [-s.width / 2, -s.height / 2 + 40],
+        content: 2,
+        fillColor: 'green',
+        fontSize: 50
+    });
+    paper.view.center = new paper.Point(0, 0);
+    paper.view.draw();
+    ox2 = new paper.Path.Line({
         from: [0, -300],
         to: [0, 300],
         strokeWidth: 1,
         strokeColor: 'black'
     });
-    var oy2 = new paper.Path.Line({
+    oy2 = new paper.Path.Line({
         from: [-300, 0],
         to: [300, 0],
         strokeWidth: 1,
@@ -149,7 +182,16 @@ require(['mg-space2'], function (space2) {
 
     systems[3] = space.make_axes('polar');
     paper.projects[3].activate();
-    var or = new paper.Path.Line({
+    s = paper.view.viewSize;
+    new paper.PointText({
+        point: [-s.width / 2, -s.height / 2 + 40],
+        content: 3,
+        fillColor: 'green',
+        fontSize: 50
+    });
+    paper.view.center = new paper.Point(0, 0);
+    paper.view.draw();
+    or = new paper.Path.Line({
         from: [0, 0],
         to: [300, 0],
         strokeWidth: 1,
@@ -163,174 +205,150 @@ require(['mg-space2'], function (space2) {
             strokeWidth: 1
         });
     }
+    return systems;
+}
+
+function draw_point(point) {
+    return new paper.Path.Circle({
+        center: point,
+        radius: 10,
+        fillColor: 'red'
+    })
+}
+
+function draw_segment(to, from) {
+    return new paper.Path.Line({
+        from: from,
+        to: to,
+        strokeColor: 'green'
+    })
+}
+
+function test_point(systems, space) {
+    var my_point, i, projections, renders,
+        gui, global, x_controller, y_controller, update;
+    my_point = space.make_point();
+    my_point.x = 100;
+    my_point.y = 100;
 
     projections = [];
-    segment_projections = [];
-    for (var i = 0; i < 4; i++) {
+    for (i = 0; i < 4; i++) {
         projections.push(my_point.make_project(systems[i]));
-        segment_projections.push(my_segment.make_project(systems[i]));
     }
-
-    var renders = [];
-    var segment_renders = [];
+    renders = [];
 
     projections.forEach(function (p, index) {
+        var point;
         paper.projects[index].activate();
-        var s = paper.view.viewSize;
-        new paper.PointText({
-            point: [-s.width / 2, -s.height / 2 + 40],
-            content: index,
-            fillColor: 'green',
-            fontSize: 50
-        });
-        paper.view.center = [0, 0];
-        var point = [my_point.x, my_point.y];
-//            switch (index) {
-//                case 0:
-//                    point = [p.x, -p.y];
-//                    break;
-//                case 1:
-//                    point = [p.x, p.y];
-//                    break;
-//                case 2:
-//                    point = [p.y, -p.x];
-//                    break;
-//                case 3:
-//                    point = [p.r * Math.cos(-p.phi), p.r * Math.sin(-p.phi)]
-//                    break;
-//            }
-        renders.push(new paper.Path.Circle({
-            center: point,
-            radius: 10,
-            fillColor: 'red'
-        }));
+        point = [my_point.x, my_point.y];
+        renders.push(draw_point(point));
         paper.view.draw();
     });
 
-    segment_projections.forEach(function (p, index) {
-        paper.projects[index].activate();
-
-        paper.view.center = [0, 0];
-        var point1 = [my_segment.point1.x, my_segment.point1.y];
-        var point2 = [my_segment.point2.x, my_segment.point2.y];
-
-        segment_renders.push(new paper.Path.Line({
-            from: point1,
-            to: point2,
-            strokeColor: 'green'
-        }));
-        paper.view.draw();
-    });
-
-//        var update = function (value) {
-//            renders.forEach(function (r, index) {
-//                var p = projections[index];
-//                var point = [my_point.x, my_point.y];
-////                switch (index) {
-////                    case 0:
-////                        point = [p.x, -p.y];
-////                        break;
-////                    case 1:
-////                        point = [p.x, p.y];
-////                        break;
-////                    case 2:
-////                        point = [p.y, -p.x];
-////                        break;
-////                    case 3:
-////                        point = [p.r * Math.cos(-p.phi), p.r * Math.sin(-p.phi)]
-////                        break;
-////                }
-//                r.position = point;
-//                paper.projects[index].view.draw();
-//            });
-//
-//        };
-
-    var update = function (value) {
-
-        segment_renders.forEach(function (r, index) {
-            var p = segment_projections[index];
-            var p1 = [my_segment.point1.x, my_segment.point1.y];
-            var p2 = [my_segment.point2.x, my_segment.point2.y];
-//                r.position = [(p2[0] + p1[0]) / 2, (p2[1] + p1[1]) / 2];
-
-            r.firstSegment.point.x = p1[0];
-            r.firstSegment.point.y = p1[1];
-            r.lastSegment.point.x = p2[0];
-            r.lastSegment.point.y = p2[1];
-
+    update = function (value) {
+        var p, point;
+        renders.forEach(function (r, index) {
+            p = projections[index];
+            point = [my_point.x, my_point.y];
+            r.position = point;
             paper.projects[index].view.draw();
         });
+
     };
 
-    var gui = new dat.GUI();
 
-//        var global = gui.addFolder('Global');
-//        var x_controller = global.add(my_point, 'x', -300, 300).listen();
-//        var y_controller = global.add(my_point, 'y', -300, 300).listen();
-//        x_controller.onChange(update);
-//        y_controller.onChange(update);
-//        global.open();
-//
-//        projections.forEach(function (proj, index) {
-//            var t = systems[index].type;
-//            var f = gui.addFolder(index);
-//            if (t == 'affine') {
-//                var x_controller = f.add(proj, 'x', -300, 300).listen();
-//                var y_controller = f.add(proj, 'y', -300, 300).listen();
-//                x_controller.onChange(update);
-//                y_controller.onChange(update);
-//            } else {
-//                var r_controller = f.add(proj, 'r', 0, 300).listen();
-//                var phi_controller = f.add(proj, 'phi', -Math.PI, Math.PI).listen();
-//                r_controller.onChange(update);
-//                phi_controller.onChange(update);
-//            }
-//            f.open();
-//        })
+    gui = new dat.GUI();
 
-    var global = gui.addFolder('Global');
-    //var point1_x_controller = global.add(my_segment.point1, 'x', -300, 300).listen();
-    //var point1__y_controller = global.add(my_segment.point1, 'y', -300, 300).listen();
-    //var point2_x_controller = global.add(my_segment.point2, 'x', -300, 300).listen();
-    //var point2__y_controller = global.add(my_segment.point2, 'y', -300, 300).listen();
-    //point1_x_controller.onChange(update);
-    //point1__y_controller.onChange(update);
-    //point2_x_controller.onChange(update);
-    //point2__y_controller.onChange(update);
-    //var point1_x_controller = global.add(my_segment, 'angle', -300, 300).listen();
-    //var point1_y_controller = global.add(my_point, 'length', -300, 300).listen();
-    //point1_x_controller.onChange(update);
-    //point1_y_controller.onChange(update);
+    global = gui.addFolder('Global');
+    x_controller = global.add(my_point, 'x', -300, 300).listen();
+    y_controller = global.add(my_point, 'y', -300, 300).listen();
+    x_controller.onChange(update);
+    y_controller.onChange(update);
     global.open();
 
+    projections.forEach(function (proj, index) {
+        var t, f, x_controller, y_controller, r_controller, phi_controller;
 
-    segment_projections.forEach(function (proj, index) {
-        var t = systems[index].type;
-        var f = gui.addFolder(index);
+        t = systems[index].type;
+        f = gui.addFolder(index);
         if (t == 'affine') {
-            //var point1_x_controller = f.add(proj.point1, 'x', -300, 300).listen();
-            //var point1_y_controller = f.add(proj.point1, 'y', -300, 300).listen();
-            //var point2_x_controller = f.add(proj.point2, 'x', -300, 300).listen();
-            //var point2_y_controller = f.add(proj.point2, 'y', -300, 300).listen();
-            //point1_x_controller.onChange(update);
-            //point1_y_controller.onChange(update);
-            //point2_x_controller.onChange(update);
-            //point2_y_controller.onChange(update);
-            var point1_x_controller = f.add(proj, 'angle', -300, 300).listen();
-            var point1_y_controller = f.add(proj, 'length', -300, 300).listen();
-            point1_x_controller.onChange(update);
-            point1_y_controller.onChange(update);
+            x_controller = f.add(proj, 'x', -300, 300).listen();
+            y_controller = f.add(proj, 'y', -300, 300).listen();
+            x_controller.onChange(update);
+            y_controller.onChange(update);
         } else {
-            var point1_r_controller = f.add(proj.point1, 'r', 0, 300).listen();
-            var point1_phi_controller = f.add(proj.point1, 'phi', -Math.PI, Math.PI).listen();
-            var point2_r_controller = f.add(proj.point2, 'r', 0, 300).listen();
-            var point2_phi_controller = f.add(proj.point2, 'phi', -Math.PI, Math.PI).listen();
-            point1_r_controller.onChange(update);
-            point1_phi_controller.onChange(update);
-            point2_r_controller.onChange(update);
-            point2_phi_controller.onChange(update);
+            r_controller = f.add(proj, 'r', 0, 300).listen();
+            phi_controller = f.add(proj, 'phi', -Math.PI, Math.PI).listen();
+            r_controller.onChange(update);
+            phi_controller.onChange(update);
         }
         f.open();
+    })
+}
+
+function test_segment(systems, space) {
+    var my_segment, i, projections, renders,
+        gui, global, x_controller, y_controller, update;
+    my_segment = space.make_segment();
+    my_segment.point1.x = 10;
+    my_segment.point2.x = 100;
+    my_segment.point1.y = 10;
+    my_segment.point2.y = 100;
+    projections = [];
+    for (i = 0; i < 4; i++) {
+        projections.push(my_segment.make_project(systems[i]));
+    }
+    renders = [];
+
+    projections.forEach(function (p, index) {
+        var to, from;
+        paper.projects[index].activate();
+        to = [my_segment.point1.x, my_segment.point1.y];
+        from = [my_segment.point2.x, my_segment.point2.y];
+
+        renders.push(draw_segment(to, from));
+        paper.view.draw();
     });
-});
+
+    update = function (value) {
+        var p, point;
+        renders.forEach(function (r, index) {
+            p = projections[index];
+            r.firstSegment.point.x = my_segment.point1.x;
+            r.firstSegment.point.y = my_segment.point1.y;
+            r.lastSegment.point.x = my_segment.point2.x;
+            r.lastSegment.point.y = my_segment.point2.y;
+            paper.projects[index].view.draw();
+        });
+
+    };
+
+
+    gui = new dat.GUI();
+
+    global = gui.addFolder('Global');
+    x_controller = global.add(my_segment.point1, 'x', -300, 300).listen();
+    y_controller = global.add(my_segment.point1, 'y', -300, 300).listen();
+    x_controller.onChange(update);
+    y_controller.onChange(update);
+    global.open();
+
+    projections.forEach(function (proj, index) {
+        var t, f, x_controller, y_controller, r_controller, phi_controller;
+
+        t = systems[index].type;
+        f = gui.addFolder(index);
+        if (t == 'affine') {
+            x_controller = f.add(proj.point1, 'x', -300, 300).listen();
+            y_controller = f.add(proj.point1, 'y', -300, 300).listen();
+            x_controller.onChange(update);
+            y_controller.onChange(update);
+        } else {
+            r_controller = f.add(proj.point1, 'r', 0, 300).listen();
+            phi_controller = f.add(proj.point1, 'phi', -Math.PI, Math.PI).step(0.1).listen();
+            r_controller.onChange(update);
+            phi_controller.onChange(update);
+        }
+        f.open();
+    })
+}

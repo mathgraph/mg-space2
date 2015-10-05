@@ -6,7 +6,8 @@ define(['mg-space2/utils/vec2'], function (vec2) {
      * @returns {Point.PolarProjection}
      */
     return function (polar) {
-        var self = this;
+        var self = this,
+            obj;
 
         /**
          * Point projection to polar axes
@@ -15,28 +16,49 @@ define(['mg-space2/utils/vec2'], function (vec2) {
          * @property {Number} phi
          */
 
-        return {
-            get r() {
+        obj =  {
+            getR: function () {
                 var x = self.x - polar.center[0],
                     y = self.y - polar.center[1];
                 return vec2.length(x, y) * polar.scale;
             },
-            set r(v) {
+            setR: function (v) {
+                var that = this;
                 v /= polar.scale;
-                self.x = Math.cos(this.phi) * v + polar.center[0];
-                self.y = Math.sin(this.phi) * v + polar.center[1];
+                self.x = Math.cos(that.getPhi()) * v + polar.center[0];
+                self.y = Math.sin(that.getPhi()) * v + polar.center[1];
             },
-            get phi() {
+            getPhi: function () {
                 var x = self.x - polar.center[0],
                     y = self.y - polar.center[1];
-                return vec2.angle(x, y);
+                return vec2.angle(x, y) + 0.0;
             },
-            set phi(v) {
-                var r = this.r / polar.scale;
+            setPhi: function (v) {
+                var that = this,
+                    r = that.getR() / polar.scale;
                 self.x = Math.cos(v) * r + polar.center[0];
                 self.y = Math.sin(v) * r + polar.center[1];
+            },
+            //update: function () {
+            //    this.setR(this.r);
+            //    this.setPhi(this.phi);
+            //    return this;
+            //},
+            get r() {
+                return this.getR();
+            },
+            set r(v) {
+                this.setR(v);
+            },
+            get phi() {
+                return this.getPhi();
+            },
+            set phi(v) {
+                this.setPhi(v);
             }
-
-        }
+        };
+        //obj.r = obj.getR();
+        //obj.phi = obj.getPhi();
+        return obj
     };
 });

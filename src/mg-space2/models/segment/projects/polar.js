@@ -6,7 +6,9 @@ define(['mg-space2/utils/vec2'], function (vec2) {
      * @returns {Segment.PolarProjection}
      */
     return function (polar) {
-        var self = this;
+        var self = this,
+            projP1 = self.point1.make_project(polar),
+            projP2 = self.point2.make_project(polar);
         /**
          * Segment projection to polar axes
          * @typedef {Object} Segment.PolarProjection
@@ -18,55 +20,52 @@ define(['mg-space2/utils/vec2'], function (vec2) {
          * @property {Number} point2.phi
          */
         return {
+            getPoint1: function () {
+                return projP1;
+            },
+            setPoint1: function (p) {
+                projP1.setPhi(p.phi);
+                projP1.setR(p.r);
+                return this;
+            },
+            getPoint2: function () {
+                return projP2;
+            },
+            setPoint2: function (p) {
+                projP2.setPhi(p.phi);
+                projP2.setR(p.r);
+                return this;
+            },
+            translate: function (v) {
+                var that = this;
+                that.getPoint1().setR(that.getPoint1().getR() + v.r);
+                that.getPoint1().setPhi(that.getPoint1().getPhi() + v.phi);
+                that.getPoint2().setR(that.getPoint2().getR() + v.r);
+                that.getPoint2().setPhi(that.getPoint2().getPhi() + v.phi);
+
+                return that;
+            },
+            //update: function () {
+            //    var that = this;
+            //
+            //    that.getPoint1().update();
+            //    that.getPoint2().update();
+            //
+            //
+            //    return that;
+            //},
             get point1() {
-                return {
-                    get r() {
-                        var x = self.point1.x - polar.center[0],
-                            y = self.point1.y - polar.center[1];
-                        return vec2.length(x, y) * polar.scale;
-                    },
-                    set r(v) {
-                        v /= polar.scale;
-                        self.point1.x = Math.cos(this.phi) * v + polar.center[0];
-                        self.point1.y = Math.sin(this.phi) * v + polar.center[1];
-                    },
-                    get phi() {
-                        var x = self.point1.x - polar.center[0],
-                            y = self.point1.y - polar.center[1];
-                        return vec2.angle(x, y);
-                    },
-                    set phi(v) {
-                        var r = this.r / polar.scale;
-                        self.point1.x = Math.cos(v) * r + polar.center[0];
-                        self.point1.y = Math.sin(v) * r + polar.center[1];
-                    }
-                };
+                return this.getPoint1();
+            },
+            set point1(v) {
+                this.setPoint1(v);
             },
             get point2() {
-                return {
-                    get r() {
-                        var x = self.point2.x - polar.center[0],
-                            y = self.point2.y - polar.center[1];
-                        return vec2.length(x, y) * polar.scale;
-                    },
-                    set r(v) {
-                        v /= polar.scale;
-                        self.point2.x = Math.cos(this.phi) * v + polar.center[0];
-                        self.point2.y = Math.sin(this.phi) * v + polar.center[1];
-                    },
-                    get phi() {
-                        var x = self.point2.x - polar.center[0],
-                            y = self.point2.y - polar.center[1];
-                        return vec2.angle(x, y);
-                    },
-                    set phi(v) {
-                        var r = this.r / polar.scale;
-                        self.point2.x = Math.cos(v) * r + polar.center[0];
-                        self.point2.y = Math.sin(v) * r + polar.center[1];
-                    }
-                };
+                return this.getPoint2();
+            },
+            set point2(v) {
+                this.setPoint2(v);
             }
-
         }
     }
 });

@@ -6,7 +6,8 @@ define(['mg-space2/utils/vec2'], function (vec2) {
      * @returns {Point.AffineProjection}
      */
     return function (affine) {
-        var self = this;
+        var self = this,
+            obj;
 
         /**
          * Point projection to affine axes
@@ -15,25 +16,47 @@ define(['mg-space2/utils/vec2'], function (vec2) {
          * @property {Number} y
          */
 
-        return {
-            get x() {
+        obj = {
+            getX: function () {
                 var vec = vec2.product([self.x, self.y], affine.to_local);
-                return vec[0];
+                return vec[0] + 0.0;
             },
-            set x(v) {
-                var vec = vec2.product([v, this.y], affine.to_global);
+            setX: function (v) {
+                var that = this,
+                    vec = vec2.product([v, that.getY()], affine.to_global);
                 self.x = vec[0];
                 self.y = vec[1]
             },
-            get y() {
+            getY: function () {
                 var vec = vec2.product([self.x, self.y], affine.to_local);
-                return vec[1];
+                return vec[1] + 0.0;
             },
-            set y(v) {
-                var vec = vec2.product([this.x, v], affine.to_global);
+            setY: function (v) {
+                var that = this,
+                    vec = vec2.product([that.getX(), v], affine.to_global);
                 self.x = vec[0];
                 self.y = vec[1];
+            },
+            //update: function () {
+            //    this.setX(this.x);
+            //    this.setY(this.y);
+            //    return this;
+            //},
+            get x() {
+                return this.getX();
+            },
+            set x(v) {
+                this.setX(v);
+            },
+            get y() {
+                return this.getY();
+            },
+            set y(v) {
+                this.setY(v);
             }
-        }
+        };
+        //obj.x = obj.getX();
+        //obj.y = obj.getY();
+        return obj
     };
 });
