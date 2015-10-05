@@ -6,7 +6,8 @@ define(['mg-space2/utils/vec2'], function (vec2) {
      * @returns {Point.AffineProjection}
      */
     return function (affine) {
-        var self = this;
+        var self = this,
+            obj;
 
         /**
          * Point projection to affine axes
@@ -15,10 +16,10 @@ define(['mg-space2/utils/vec2'], function (vec2) {
          * @property {Number} y
          */
 
-        return {
+        obj = {
             getX: function () {
                 var vec = vec2.product([self.x, self.y], affine.to_local);
-                return vec[0];
+                return vec[0] + 0.0;
             },
             setX: function (v) {
                 var that = this,
@@ -28,7 +29,7 @@ define(['mg-space2/utils/vec2'], function (vec2) {
             },
             getY: function () {
                 var vec = vec2.product([self.x, self.y], affine.to_local);
-                return vec[1];
+                return vec[1] + 0.0;
             },
             setY: function (v) {
                 var that = this,
@@ -41,8 +42,21 @@ define(['mg-space2/utils/vec2'], function (vec2) {
                 this.setY(this.y);
                 return this;
             },
-            x: this.getX(),
-            y: this.getY()
-        }
+            get x() {
+                return this.getX();
+            },
+            set x(v) {
+                this.setX(v);
+            },
+            get y() {
+                return this.getY();
+            },
+            set y(v) {
+                this.setY(v);
+            }
+        };
+        //obj.x = obj.getX();
+        //obj.y = obj.getY();
+        return obj
     };
 });

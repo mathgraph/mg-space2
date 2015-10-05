@@ -59,6 +59,7 @@ define(['./projects/polar', './projects/affine'], function (make_polar_project, 
             segment = Object.create(prototype);
         segment.point1 = space2.make_point();
         segment.point2 = space2.make_point();
+        segment.point2.x = 1;
         return segment;
     };
 

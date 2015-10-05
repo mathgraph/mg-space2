@@ -112,10 +112,30 @@ define(['mg-space2/utils/vec2'], function (vec2) {
 
                 return that;
             },
-            point1: this.getPoint1(),
-            point2: this.getPoint2(),
-            length: this.getLength(),
-            angle: this.getAngle()
+            get point1() {
+                return this.getPoint1();
+            },
+            set point1(v) {
+                this.setPoint1(v);
+            },
+            get point2() {
+                return this.getPoint2();
+            },
+            set point2(v) {
+                this.setPoint2(v);
+            },
+            get angle() {
+                return this.getAngle
+            },
+            set angle(v) {
+                this.setAngle(v)
+            },
+            get length() {
+                return this.getLength
+            },
+            set length(v) {
+                this.setLength(v)
+            }
         }
     }
 });

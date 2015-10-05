@@ -6,7 +6,8 @@ define(['mg-space2/utils/vec2'], function (vec2) {
      * @returns {Point.PolarProjection}
      */
     return function (polar) {
-        var self = this;
+        var self = this,
+            obj;
 
         /**
          * Point projection to polar axes
@@ -15,7 +16,7 @@ define(['mg-space2/utils/vec2'], function (vec2) {
          * @property {Number} phi
          */
 
-        return {
+        obj =  {
             getR: function () {
                 var x = self.x - polar.center[0],
                     y = self.y - polar.center[1];
@@ -30,7 +31,7 @@ define(['mg-space2/utils/vec2'], function (vec2) {
             getPhi: function () {
                 var x = self.x - polar.center[0],
                     y = self.y - polar.center[1];
-                return vec2.angle(x, y);
+                return vec2.angle(x, y) + 0.0;
             },
             setPhi: function (v) {
                 var that = this,
@@ -43,8 +44,21 @@ define(['mg-space2/utils/vec2'], function (vec2) {
                 this.setPhi(this.phi);
                 return this;
             },
-            r: this.getR(),
-            phi: this.getPhi()
-        }
+            get r() {
+                return this.getR();
+            },
+            set r(v) {
+                this.setR(v);
+            },
+            get phi() {
+                return this.getPhi();
+            },
+            set phi(v) {
+                this.setPhi(v);
+            }
+        };
+        //obj.r = obj.getR();
+        //obj.phi = obj.getPhi();
+        return obj
     };
 });
