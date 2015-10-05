@@ -6,7 +6,9 @@ define(['mg-space2/utils/vec2'], function (vec2) {
      * @returns {Segment.AffineProjection}
      */
     return function (affine) {
-        var self = this;
+        var self = this,
+            projP1 = self.point1.make_project(affine),
+            projP2 = self.point2.make_project(affine);
 
         /**
          * Segment projection to affine axes
@@ -20,111 +22,100 @@ define(['mg-space2/utils/vec2'], function (vec2) {
          */
 
         return {
-            get point1() {
-                var vec;
-                return {
-                    get x() {
-                        return vec2.product([self.point1.x, self.point1.y], affine.to_local)[0];
-                    },
-                    set x(v) {
-                        vec = vec2.product([v, this.y], affine.to_global);
-                        self.point1.x = vec[0];
-                        self.point1.y = vec[1]
-                    },
-                    get y() {
-                        return vec2.product([self.point1.x, self.point1.y], affine.to_local)[1];
-                    },
-                    set y(v) {
-                        vec = vec2.product([this.x, v], affine.to_global);
-                        self.point1.x = vec[0];
-                        self.point1.y = vec[1]
-                    }
-                };
+            getPoint1: function () {
+                return projP1;
             },
-            get point2() {
-                var vec;
-                return {
-                    get x() {
-                        return vec2.product([self.point2.x, self.point2.y], affine.to_local)[0];
-                    },
-                    set x(v) {
-                        vec = vec2.product([v, this.y], affine.to_global);
-                        self.point2.x = vec[0];
-                        self.point2.y = vec[1]
-                    },
-                    get y() {
-                        return vec2.product([self.point2.x, self.point2.y], affine.to_local)[1];
-                    },
-                    set y(v) {
-                        vec = vec2.product([this.x, v], affine.to_global);
-                        self.point2.x = vec[0];
-                        self.point2.y = vec[1]
-                    }
-                };
+            setPoint1: function (p) {
+                projP1.setX(p.x);
+                projP1.setY(p.y);
+                return this;
             },
-            set point2(value) {
-                var vec = vec2.product([value.x, value.y], affine.to_global);
-                self.point2.x = vec[0];
-                self.point2.y = vec[1]
+            getPoint2: function () {
+                return projP2;
             },
-            set point1(value) {
-                var vec = vec2.product([value.x, value.y], affine.to_global);
-                self.point1.x = vec[0];
-                self.point1.y = vec[1]
+            setPoint2: function (p) {
+                projP2.setX(p.x);
+                projP2.setY(p.y);
+                return this;
             },
-            get length() {
-                var vec = vec2.subtraction([this.point1.x, this.point1.y], [this.point2.x, this.point2.y]);
+            getLength: function () {
+                var that = this,
+                    vec = vec2.subtraction([that.getPoint1().x, that.getPoint1().y],
+                        [that.getPoint2().x, that.getPoint2().y]);
                 return vec2.length(vec[0], vec[1]);
             },
-            get angle() {
-                var vec = vec2.subtraction([this.point1.x, this.point1.y], [this.point2.x, this.point2.y]);
-                return vec2.angle(vec[0], vec[1])
-            },
-            set translate(v) {
-                var vec = vec2.product([this.point1.x + v.x, this.point1.y + v.y], affine.to_global);
-                self.point1.x = vec[0];
-                self.point1.y = vec[1];
-                vec = vec2.product([this.point2.x + v.x, this.point2.y + v.y], affine.to_global);
-                self.point2.x = vec[0];
-                self.point2.y = vec[1]
-            },
-            set length(v) {
-                var vec, length, delta;
-                vec = vec2.subtraction([this.point1.x, this.point1.y], [this.point2.x, this.point2.y]);
+            setLength: function (v) {
+                var that = this,
+                    vec, length, delta;
+
+                vec = vec2.subtraction([that.getPoint1().x, that.getPoint1().y],
+                    [that.getPoint2().x, that.getPoint2().y]);
                 length = vec2.length(vec[0], vec[1]);
                 vec[0] = vec[0] / length * v;
                 vec[1] = vec[1] / length * v;
 
-                delta = vec2.subtraction([(this.point1.x + this.point2.x) / 2, (this.point1.y + this.point2.y) / 2],
+                delta = vec2.subtraction([(that.getPoint1().getX() + that.getPoint2().getX()) / 2,
+                        (that.getPoint1().getY() + that.getPoint2().getY()) / 2],
                     [vec[0] / 2, vec[1] / 2]);
 
                 vec = vec2.translate([[0, 0], [vec[0], vec[1]]], delta);
-                vec[0] = vec2.product(vec[0], affine.to_global);
-                vec[1] = vec2.product(vec[1], affine.to_global);
-                self.point1.x = vec[0][0];
-                self.point1.y = vec[0][1];
-                self.point2.x = vec[1][0];
-                self.point2.y = vec[1][1];
+                that.getPoint1().setX(vec[0][0]);
+                that.getPoint1().setY(vec[0][1]);
+                that.getPoint2().setX(vec[1][0]);
+                that.getPoint2().setY(vec[1][1]);
 
+                return that;
             },
-            set angle(v) {
-                var vec, length, delta;
-                vec = vec2.subtraction([this.point1.x, this.point1.y], [this.point2.x, this.point2.y]);
+            getAngle: function () {
+                var that = this,
+                    vec = vec2.subtraction([that.getPoint1().x, that.getPoint1().y],
+                    [that.getPoint2().x, that.getPoint2().y]);
+                return vec2.angle(vec[0], vec[1])
+            },
+            setAngle: function (v) {
+                var that = this,
+                    vec, length, delta;
+                vec = vec2.subtraction([that.getPoint1().x, that.getPoint1().y],
+                    [that.getPoint2().x, that.getPoint2().y]);
                 length = vec2.length(vec[0], vec[1]);
                 vec[0] = length * Math.cos(v);
                 vec[1] = length * Math.sin(v);
 
-                delta = vec2.subtraction([(this.point1.x + this.point2.x) / 2, (this.point1.y + this.point2.y) / 2],
+                delta = vec2.subtraction([(that.getPoint1().getX() + that.getPoint2().getX()) / 2,
+                        (that.getPoint1().getY() + that.getPoint2().getY()) / 2],
                     [vec[0] / 2, vec[1] / 2]);
 
                 vec = vec2.translate([[0, 0], [vec[0], vec[1]]], delta);
-                vec[0] = vec2.product(vec[0], affine.to_global);
-                vec[1] = vec2.product(vec[1], affine.to_global);
-                self.point1.x = vec[0][0];
-                self.point1.y = vec[0][1];
-                self.point2.x = vec[1][0];
-                self.point2.y = vec[1][1];
-            }
+                that.getPoint1().setX(vec[0][0]);
+                that.getPoint1().setY(vec[0][1]);
+                that.getPoint2().setX(vec[1][0]);
+                that.getPoint2().setY(vec[1][1]);
+
+                return that;
+            },
+            translate: function (v) {
+                var that = this;
+                that.getPoint1().setX(that.getPoint1().getX() + v.x);
+                that.getPoint1().setY(that.getPoint1().getY() + v.y);
+                that.getPoint2().setX(that.getPoint2().getX() + v.x);
+                that.getPoint2().setY(that.getPoint2().getY() + v.y);
+
+                return that;
+            },
+            update: function () {
+                var that = this;
+
+                that.getPoint1().update();
+                that.getPoint2().update();
+                that.setLength(that.length)
+                    .setAngle(that.angle);
+
+                return that;
+            },
+            point1: this.getPoint1(),
+            point2: this.getPoint2(),
+            length: this.getLength(),
+            angle: this.getAngle()
         }
     }
 });

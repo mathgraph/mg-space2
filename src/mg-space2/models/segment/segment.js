@@ -22,13 +22,31 @@ define(['./projects/polar', './projects/affine'], function (make_polar_project, 
      */
 
     prototype.make_project = function (axes) {
+        var segment = this,
+            proj;
+
+        segment.projects = segment.projects || [];
+
         switch (axes.type) {
             case 'affine':
-                return make_affine_project.bind(this)(axes);
+                proj = make_affine_project.bind(this)(axes);
+                break;
             case 'polar':
-                return make_polar_project.bind(this)(axes);
+                proj = make_polar_project.bind(this)(axes);
+                break;
         }
-        return null;
+        segment.projects.push(proj);
+        return proj || null;
+    };
+
+    prototype.update = function () {
+        var segment = this;
+
+        segment.projects.forEach(function (proj) {
+            proj.update();
+        });
+
+        return segment;
     };
 
     /**
@@ -37,14 +55,10 @@ define(['./projects/polar', './projects/affine'], function (make_polar_project, 
      * @returns {Segment}
      */
     return function make_segment() {
-        var segment = Object.create(prototype);
-        segment.point1 = {};
-        segment.point2 = {};
-        segment.point1.x = 0;
-        segment.point1.y = 0;
-        segment.point2.x = 0;
-        segment.point2.y = 0;
-
+        var space2 = this,
+            segment = Object.create(prototype);
+        segment.point1 = space2.make_point();
+        segment.point2 = space2.make_point();
         return segment;
     };
 
