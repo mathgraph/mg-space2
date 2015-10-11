@@ -17,9 +17,8 @@ require(['mg-space2'], function (space2) {
 
     space = space2;
     systems = make_axes(space);
-    test_segment(systems, space2);
-
-
+    //test_segment(systems, space2);
+    test_curve2(systems, space2);
 
 });
 
@@ -251,6 +250,8 @@ function test_point(systems, space) {
             p = projections[index];
             point = [my_point.x, my_point.y];
             r.position = point;
+            console.log(index, renders.length - 1);
+            index === renders.length - 1 && (r.position.y = -r.position.y);
             paper.projects[index].view.draw();
         });
 
@@ -318,6 +319,8 @@ function test_segment(systems, space) {
             r.firstSegment.point.y = my_segment.point1.y;
             r.lastSegment.point.x = my_segment.point2.x;
             r.lastSegment.point.y = my_segment.point2.y;
+            index === renders.length - 1 && (r.firstSegment.point.y = -r.firstSegment.point.y);
+            index === renders.length - 1 && (r.lastSegment.point.y = -r.lastSegment.point.y);
             paper.projects[index].view.draw();
         });
 
@@ -351,4 +354,24 @@ function test_segment(systems, space) {
         }
         f.open();
     })
+}
+
+function test_curve2(systems, space2) {
+    var my_curve, proj;
+    my_curve = space2.make_curve2();
+
+    proj = my_curve.make_project(systems[0]);
+    console.log(proj.getEquation());
+    proj.setEquation({
+        A: 1,
+        B: 0,
+        C: 0,
+        D: 0,
+        E: 0,
+        F: 0
+    });
+    console.log(proj.getEquation());
+    console.log(proj.getEquationAsString());
+    //console.log(proj.getEccentricity())
+    //console.log(proj.getFocalDistance())
 }
