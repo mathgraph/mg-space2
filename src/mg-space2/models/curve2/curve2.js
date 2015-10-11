@@ -1,4 +1,5 @@
-define(['./projects/polar', './projects/affine'], function (make_polar_project, make_affine_project) {
+define(['./projects/polar', './projects/affine', '../../utils/curve2'],
+    function (make_polar_project, make_affine_project, curve2) {
 
     /**
      * @class Curve2
@@ -39,6 +40,10 @@ define(['./projects/polar', './projects/affine'], function (make_polar_project, 
         });
 
         return curve2;
+    };
+
+    prototype.getType = function () {
+        return curve2.getType(this);
     };
 
     /**
