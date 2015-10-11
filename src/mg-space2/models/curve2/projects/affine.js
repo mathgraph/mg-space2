@@ -20,7 +20,7 @@ define(['mg-space2/utils/utils', 'mg-space2/utils/vec2', 'mg-space2/utils/curve2
             },
             getEquationAsString: function () {
                 var cv, str;
-                cv = curve2.product(self, affine.to_local);
+                //console.log(curve2.getType(self));
                 str = utils.monomialToString(cv.A, 'x^2') +
                        utils.monomialToString(cv.B, 'y^2') +
                        utils.monomialToString(cv.C, 'xy') +
@@ -51,6 +51,9 @@ define(['mg-space2/utils/utils', 'mg-space2/utils/vec2', 'mg-space2/utils/curve2
                     case 'Parabolic':
                         return canonical.p / 2;
                         break;
+                    default:
+                        return null;
+                    break;
                 }
             }
         };

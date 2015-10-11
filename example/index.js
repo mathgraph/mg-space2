@@ -360,13 +360,15 @@ function test_curve2(systems, space2) {
     var my_curve, proj;
     my_curve = space2.make_curve2();
 
-    proj = my_curve.make_project(systems[3]);
+    proj = my_curve.make_project(systems[0]);
     console.log(proj.getEquation());
     proj.setEquation({
-        e: 1,
-        p: 2,
-        alpha: 0,
-        shift: {r: 1, phi:0}
+        A: 1,
+        B: 0,
+        C: 0,
+        D: 0,
+        E: 0,
+        F: 0
     });
     console.log(proj.getEquation());
     console.log(proj.getEquationAsString());

@@ -15,9 +15,15 @@ define(function () {
         },
         monomialToString: function(number, string) {
             if (number > 0) {
+                if (number == 1 && string !="") {
+                    number = ""
+                }
                 return "+" + number + string
             }
             if (number < 0) {
+                if (number == -1 && string !="") {
+                    number = "-"
+                }
                 return "" + number + string
             }
             if (number == 0) {

@@ -94,7 +94,23 @@ define(['mg-space2/utils/utils'], function (utils) {
                     }
                 }
             } else {
-                return "It is degenerate curve"
+                if (inv.D > 0) {
+                    return "Point"
+                } else {
+                    if (inv.D < 0) {
+                        return "Two intersecting lines"
+                    } else {
+                        if (inv.B < 0) {
+                            return "Two parallel lines"
+                        } else {
+                            if (inv.B == 0) {
+                                return "Line"
+                            } else {
+                                return "Curve doesn't have any real points"
+                            }
+                        }
+                    }
+                }
             }
 
         },
@@ -130,6 +146,9 @@ define(['mg-space2/utils/utils'], function (utils) {
                         p: (1 / eigen.lambda1) * Math.sqrt(-inv.Delta / eigen.lambda1)
                     };
                     break;
+                default:
+                    return null;
+                break;
             }
         },
         getEccentricity: function(curve2) {
@@ -146,6 +165,9 @@ define(['mg-space2/utils/utils'], function (utils) {
                 case 'Parabolic':
                     return 1;
                     break;
+                default:
+                    return null;
+                break;
             }
         },
         getFocalArgument: function(curve2) {
@@ -161,6 +183,9 @@ define(['mg-space2/utils/utils'], function (utils) {
                 case 'Parabolic':
                     return canonical.p;
                     break;
+                default:
+                    return null;
+                break;
             }
         }
 
