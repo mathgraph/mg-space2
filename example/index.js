@@ -357,21 +357,27 @@ function test_segment(systems, space) {
 }
 
 function test_curve2(systems, space2) {
-    var my_curve, proj;
+    var my_curve, proj, proj2, axe, axe2;
     my_curve = space2.make_curve2();
-
-    proj = my_curve.make_project(systems[0]);
+    axe = space2.make_axes('affine');
+    axe.basis = [[100, 0], [0, -100]];
+    axe2 = space2.make_axes('affine');
+    axe2.basis = [[1, 0], [0, 1]];
+    proj = my_curve.make_project(axe2);
     console.log(proj.getEquation());
     proj.setEquation({
         A: 1,
-        B: 0,
+        B: 1,
         C: 0,
         D: 0,
         E: 0,
-        F: 0
+        F: -25
     });
     console.log(proj.getEquation());
-    console.log(proj.getEquationAsString());
+    proj2 = my_curve.make_project(axe);
+    console.log(proj2.getEquation())
+    //console.log(my_curve);
+    //console.log(proj.getEquationAsString());
     //console.log(proj.getEccentricity())
     //console.log(proj.getFocalDistance())
 }

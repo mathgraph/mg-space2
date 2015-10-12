@@ -29,6 +29,18 @@ define(function () {
             if (number == 0) {
                 return ""
             }
+        },
+        matrix2inverse: function(mat2) {
+            var a, b, c, d, k;
+            a = mat2[0][0];
+            b = mat2[0][1];
+            c = mat2[1][0];
+            d = mat2[1][1];
+            k = 1 / (a * d - b * c);
+            return [
+                [k * d, -k * b],
+                [-k * c, k * a]
+            ]
         }
     }
 });

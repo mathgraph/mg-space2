@@ -9,6 +9,7 @@ define(['mg-space2/utils/utils'], function (utils) {
             D = curve2.D;
             E = curve2.E;
             F = curve2.F;
+            mat2 = utils.matrix2inverse(mat2);
             a = mat2[0][0];
             b = mat2[0][1];
             c = mat2[1][0];
