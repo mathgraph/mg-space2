@@ -116,35 +116,45 @@ define(['mg-space2/utils/utils'], function (utils) {
 
         },
         getEigenValue: function (curve2) {
-            var inv;
+            var inv, lambda1, lambda2;
             inv = this.getInvariants(curve2);
-            return {
-                lambda1: (inv.I + Math.sqrt(inv.I * inv.I - 4 * inv.D)) / 2,
-                lambda2: (inv.I - Math.sqrt(inv.I * inv.I - 4 * inv.D)) / 2
+            lambda1 = (inv.I + Math.sqrt(inv.I * inv.I - 4 * inv.D)) / 2;
+            lambda2 = (inv.I - Math.sqrt(inv.I * inv.I - 4 * inv.D)) / 2;
+            if (lambda1 < lambda2) {
+                return {
+                    lambda1: lambda2,
+                    lambda2: lambda1
+                }
+            } else {
+                return {
+                    lambda1: lambda1,
+                    lambda2: lambda2
+                }
             }
 
         },
         getCanonical: function (curve2) {
             var type, inv, eigen;
             type = this.getType(curve2);
+            //console.log(type)
             inv = this.getInvariants(curve2);
             eigen = this.getEigenValue(curve2);
             switch (type){
                 case 'Ellipse':
                     return {
-                       a2: -(inv.Delta / (eigen.lambda1 * eigen.lambda2 * eigen. lambda2)),
-                       b2: -(inv.Delta / (eigen.lambda1 * eigen.lambda2 * eigen. lambda1))
+                       a2:Math.abs(-(inv.Delta / (eigen.lambda1 * eigen.lambda2 * eigen. lambda2))),
+                       b2: Math.abs(-(inv.Delta / (eigen.lambda1 * eigen.lambda2 * eigen. lambda1)))
                     };
                     break;
                 case 'Hyperbolic':
                     return {
-                        b2: -(inv.Delta / (eigen.lambda1 * eigen.lambda2 * eigen. lambda2)),
-                        a2: -(inv.Delta / (eigen.lambda1 * eigen.lambda2 * eigen. lambda1))
+                        b2: Math.abs(-(inv.Delta / (eigen.lambda1 * eigen.lambda2 * eigen. lambda2))),
+                        a2: Math.abs(-(inv.Delta / (eigen.lambda1 * eigen.lambda2 * eigen. lambda1)))
                     };
                     break;
                 case 'Parabolic':
                     return {
-                        p: (1 / eigen.lambda1) * Math.sqrt(-inv.Delta / eigen.lambda1)
+                        p: (1 / eigen.lambda1) * Math.sqrt(Math.abs(inv.Delta / eigen.lambda1))
                     };
                     break;
                 default:
@@ -179,7 +189,7 @@ define(['mg-space2/utils/utils'], function (utils) {
             switch (type) {
                 case 'Ellipse':
                 case 'Hyperbolic':
-                    return Math.min(canonical.a2, canonical.b2) / Math.sqrt(Math.max(canonical.a2, canonical.b2));
+                    return canonical.b2 / Math.sqrt(canonical.a2);
                     break;
                 case 'Parabolic':
                     return canonical.p;
