@@ -58,6 +58,10 @@ define(['mg-space2/utils/utils', 'mg-space2/utils/vec2', 'mg-space2/utils/curve2
             },
             getCanonical: function () {
                 return curve2.getCanonical(self);
+            },
+            setCanonical: function (canon) {
+                this.setEquation(curve2.setCanonical(canon));
+                return this;
             }
         };
 

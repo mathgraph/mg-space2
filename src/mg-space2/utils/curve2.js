@@ -142,7 +142,7 @@ define(['mg-space2/utils/utils'], function (utils) {
             switch (type){
                 case 'Ellipse':
                     return {
-                       a2:Math.abs(-(inv.Delta / (eigen.lambda1 * eigen.lambda2 * eigen. lambda2))),
+                       a2: Math.abs(-(inv.Delta / (eigen.lambda1 * eigen.lambda2 * eigen. lambda2))),
                        b2: Math.abs(-(inv.Delta / (eigen.lambda1 * eigen.lambda2 * eigen. lambda1)))
                     };
                     break;
@@ -161,6 +161,38 @@ define(['mg-space2/utils/utils'], function (utils) {
                     return null;
                 break;
             }
+        },
+        setCanonical: function (canon) {
+            switch (canon.type) {
+                case 'Ellipse':
+                    return {
+                        A: 1 / canon.a2,
+                        B: 1 / canon.b2,
+                        C: 0,
+                        D: 0,
+                        E: 0,
+                        F: -1
+                    };
+                case 'Hyperbolic':
+                    return {
+                        A: 1 / canon.a2,
+                        B: -1 / canon.b2,
+                        C: 0,
+                        D: 0,
+                        E: 0,
+                        F: -1
+                    };
+                case 'Parabolic':
+                    return {
+                        A: 0,
+                        B: 1,
+                        C: 0,
+                        D: -2 * canon.p,
+                        E: 0,
+                        F: 0
+                    }
+            }
+            return null;
         },
         getEccentricity: function(curve2) {
             var type, canonical;
