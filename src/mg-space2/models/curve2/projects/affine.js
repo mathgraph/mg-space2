@@ -55,6 +55,9 @@ define(['mg-space2/utils/utils', 'mg-space2/utils/vec2', 'mg-space2/utils/curve2
                         return null;
                     break;
                 }
+            },
+            getCanonical: function () {
+                return curve2.getCanonical(self);
             }
         };
 
