@@ -1,4 +1,4 @@
-define(['mg-space2/utils/utils', 'mg-space2/utils/vec2'], function (utils, vec2) {
+define(['../../../utils/utils', 'mg-space2/utils/vec2'], function (utils, vec2) {
 
     return function (polar) {
         var self = this,
