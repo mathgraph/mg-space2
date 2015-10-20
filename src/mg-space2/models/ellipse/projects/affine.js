@@ -34,19 +34,29 @@ define(['../../../utils/utils', 'mg-space2/utils/vec2'], function (utils, vec2) 
                 this.setB(v);
             },
             getEccentricity: function () {
-                return Math.sqrt(Math.abs(this.a * this.a - this.b * this.b)) / this.a;
+                var a = this.a,
+                    b = this.b;
+                if (a > b) {
+                    return Math.sqrt(a * a - b * b) / a;
+                }
+                return Math.sqrt(b * b - a * a) / b;
             },
             get eccentricity() {
                 return this.getEccentricity();
             },
             getP: function () {
-                return (this.b * this.b) / this.a;
+                var a = this.a,
+                    b = this.b;
+                if (a > b) {
+                    return (b * b) / a;
+                }
+                return (a * a) / b;
             },
             get p() {
                 return this.getP();
             }
         };
 
-        return obj
+        return obj;
     };
 });

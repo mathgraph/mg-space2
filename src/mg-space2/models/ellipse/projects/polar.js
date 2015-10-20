@@ -6,30 +6,38 @@ define(['../../../utils/utils', 'mg-space2/utils/vec2'], function (utils, vec2) 
 
         obj = {
             getEps: function () {
-                var scale = polar.scale;
-                return Math.sqrt(Math.abs(self.a * self.a - self.b * self.b)) / self.a;
+                var scale = polar.scale,
+                    big = Math.max(self.a, self.b),
+                    small = Math.min(self.a, self.b);
+                return Math.sqrt(big * big - small * small) / big;
             },
             setEps: function (e) {
                 var scale = polar.scale,
                     p = this.getP(),
-                    a, b;
-                a = p / (1 - e * e);
-                b = p / Math.sqrt(1 - e * e);
-                self.a = self.a > self.b ? Math.max(a, b) : Math.min(a, b) / scale;
-                self.b = self.a > self.b ? Math.min(a, b) : Math.max(a, b) / scale;
+                    big, small, a, b;
+                big = p / (1 - e * e);
+                small = p / Math.sqrt(1 - e * e);
+                a = self.a;
+                b = self.b;
+                self.a = a > b ? big : small / scale;
+                self.b = a > b ? small : big / scale;
             },
             getP: function () {
-                var scale = polar.scale;
-                return (self.b * self.b) / self.a * scale;
+                var scale = polar.scale,
+                    big = Math.max(self.a, self.b),
+                    small = Math.min(self.a, self.b);
+                return (small * small) / big * scale;
             },
             setP: function (p) {
                 var scale = polar.scale,
                     e = this.getEps(),
-                    a, b;
-                a = p / (1 - e * e);
-                b = p / Math.sqrt(1 - e * e);
-                self.a = self.a > self.b ? Math.max(a, b) : Math.min(a, b) / scale;
-                self.b = self.a > self.b ? Math.min(a, b) : Math.max(a, b) / scale;
+                    big, small, a, b;
+                big = p / (1 - e * e);
+                small = p / Math.sqrt(1 - e * e);
+                a = self.a;
+                b = self.b;
+                self.a = a > b ? big : small / scale;
+                self.b = a > b ? small : big / scale;
             },
             get p() {
                 return this.getP();
