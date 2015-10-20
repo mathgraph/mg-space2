@@ -7,7 +7,7 @@ define(['../../../utils/utils', 'mg-space2/utils/vec2'], function (utils, vec2) 
         obj = {
             getEps: function () {
                 var scale = polar.scale;
-                return Math.sqrt(self.a * self.a + self.b * self.b) / self.a;
+                return Math.sqrt(self.a * self.a - self.b * self.b) / self.a;
             },
             setEps: function (e) {
                 var scale = polar.scale,
