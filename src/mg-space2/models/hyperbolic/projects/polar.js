@@ -7,13 +7,16 @@ define(['../../../utils/utils', 'mg-space2/utils/vec2'], function (utils, vec2) 
         obj = {
             getEps: function () {
                 var scale = polar.scale;
-                return (self.a * self.a + self.b * self.b) / self.a * 2 * scale;
+                return Math.sqrt(self.a * self.a + self.b * self.b) / self.a;
             },
             setEps: function (e) {
                 var scale = polar.scale,
-                    p = this.getP() * self.a / scale;
-                self.a = e / 2 / scale - p;
-                self.b = Math.sqrt(Math.abs(self.a * p));
+                    p = this.getP(),
+                    a, b;
+                a = p / (e * e - 1);
+                b = p / Math.sqrt(e * e - 1);
+                self.a = a / scale;
+                self.b = b / scale;
             },
             getP: function () {
                 var scale = polar.scale;
@@ -21,9 +24,12 @@ define(['../../../utils/utils', 'mg-space2/utils/vec2'], function (utils, vec2) 
             },
             setP: function (p) {
                 var scale = polar.scale,
-                    e = this.getEps() * self.a / 2 / scale;
-                self.a = e - p * self.a / scale;
-                self.b = Math.sqrt(Math.abs(self.a * p * self.a / scale));
+                    e = this.getEps(),
+                    a, b;
+                a = p / (e * e - 1);
+                b = p / Math.sqrt(e * e - 1);
+                self.a = a / scale;
+                self.b = b / scale;
             },
             get p() {
                 return this.getP();
@@ -39,6 +45,6 @@ define(['../../../utils/utils', 'mg-space2/utils/vec2'], function (utils, vec2) 
             }
         };
 
-        return obj
+        return obj;
     };
 });
