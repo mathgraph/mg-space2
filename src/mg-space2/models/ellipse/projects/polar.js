@@ -7,7 +7,7 @@ define(['../../../utils/utils', 'mg-space2/utils/vec2'], function (utils, vec2) 
         obj = {
             getEps: function () {
                 var scale = polar.scale;
-                return Math.sqrt(self.a * self.a - self.b * self.b) / self.a;
+                return Math.sqrt(Math.abs(self.a * self.a - self.b * self.b)) / self.a;
             },
             setEps: function (e) {
                 var scale = polar.scale,
@@ -15,8 +15,8 @@ define(['../../../utils/utils', 'mg-space2/utils/vec2'], function (utils, vec2) 
                     a, b;
                 a = p / (1 - e * e);
                 b = p / Math.sqrt(1 - e * e);
-                self.a = a / scale;
-                self.b = b / scale;
+                self.a = self.a > self.b ? Math.max(a, b) : Math.min(a, b) / scale;
+                self.b = self.a > self.b ? Math.min(a, b) : Math.max(a, b) / scale;
             },
             getP: function () {
                 var scale = polar.scale;
@@ -28,8 +28,8 @@ define(['../../../utils/utils', 'mg-space2/utils/vec2'], function (utils, vec2) 
                     a, b;
                 a = p / (1 - e * e);
                 b = p / Math.sqrt(1 - e * e);
-                self.a = a / scale;
-                self.b = b / scale;
+                self.a = self.a > self.b ? Math.max(a, b) : Math.min(a, b) / scale;
+                self.b = self.a > self.b ? Math.min(a, b) : Math.max(a, b) / scale;
             },
             get p() {
                 return this.getP();
