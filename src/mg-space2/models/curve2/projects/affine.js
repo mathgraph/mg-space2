@@ -20,7 +20,6 @@ define(['mg-space2/utils/utils', 'mg-space2/utils/vec2', 'mg-space2/utils/curve2
             },
             getEquationAsString: function () {
                 var cv, str;
-                //console.log(curve2.getType(self));
                 str = utils.monomialToString(cv.A, 'x^2') +
                        utils.monomialToString(cv.B, 'y^2') +
                        utils.monomialToString(cv.C, 'xy') +
@@ -32,36 +31,6 @@ define(['mg-space2/utils/utils', 'mg-space2/utils/vec2', 'mg-space2/utils/curve2
                 } else {
                     return str
                 }
-            },
-            getEccentricity: function() {
-                return curve2.getEccentricity(self)
-            },
-            getFocalDistance: function() {
-                var type, canonical;
-                type = curve2.getType(self);
-                canonical = curve2.getCanonical(self);
-
-                switch (type) {
-                    case 'Ellipse':
-                        return Math.sqrt(Math.abs(canonical.a2  - canonical.b2));
-                        break;
-                    case 'Hyperbolic':
-                        return Math.sqrt(Math.abs(canonical.a2  +  canonical.b2));
-                        break;
-                    case 'Parabolic':
-                        return canonical.p / 2;
-                        break;
-                    default:
-                        return null;
-                    break;
-                }
-            },
-            getCanonical: function () {
-                return curve2.getCanonical(self);
-            },
-            setCanonical: function (canon) {
-                this.setEquation(curve2.setCanonical(canon));
-                return this;
             }
         };
 
