@@ -7,17 +7,17 @@ define(['mg-space2/utils/utils', 'mg-space2/utils/vec2', 'mg-space2/utils/curve2
         shift_point_proj = shift_point.make_project(polar);
 
         obj = {
-            // getEquation: function () {
-            //     var t = curve2.getShift(self);
-            //     shift_point.x = t[0];
-            //     shift_point.y = t[1];
-            //     return {
-            //         p: curve2.getFocalArgument(self),
-            //         e: curve2.getEccentricity(self),
-            //         alpha: curve2.getAngle(self),
-            //         shift: shift_point_proj
-            //     }
-            // },
+            getEquation: function () {
+                var t = curve2.getShift(self);
+                shift_point.x = t[0];
+                shift_point.y = t[1];
+                return {
+                    p: curve2.getFocalArgument(self),
+                    e: curve2.getEccentricity(self),
+                    alpha: curve2.getAngle(self),
+                    shift: shift_point_proj
+                };
+            },
             // setEquation: function (curve2) {
             //     var a2, b2, e, p, s,
             //         A, B, C, D, E, F;
