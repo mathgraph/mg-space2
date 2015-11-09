@@ -19,8 +19,8 @@ define(['../../../utils/utils', 'mg-space2/utils/vec2'], function (utils, vec2) 
                 small = p / Math.sqrt(1 - e * e);
                 a = self.a;
                 b = self.b;
-                self.a = a > b ? big : small / scale;
-                self.b = a > b ? small : big / scale;
+                self.a = a >= b ? big : small / scale;
+                self.b = a >= b ? small : big / scale;
             },
             getP: function () {
                 var scale = polar.scale,
@@ -36,8 +36,8 @@ define(['../../../utils/utils', 'mg-space2/utils/vec2'], function (utils, vec2) 
                 small = p / Math.sqrt(1 - e * e);
                 a = self.a;
                 b = self.b;
-                self.a = a > b ? big : small / scale;
-                self.b = a > b ? small : big / scale;
+                self.a = a >= b ? big : small / scale;
+                self.b = a >= b ? small : big / scale;
             },
             get p() {
                 return this.getP();

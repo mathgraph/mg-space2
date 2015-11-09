@@ -358,7 +358,7 @@ function test_segment(systems, space) {
 
 function test_curve2(systems, space2) {
     var my_curve, proj, proj2, proj3,axe, axe2, axe3,i, j, k;
-    my_curve = space2.make_curve2();
+    my_curve = space2.make_ellipse();
     axe = space2.make_axes('affine');
     axe.basis = [[1,0],[0,1]];
     proj = my_curve.make_project(axe);
@@ -367,6 +367,10 @@ function test_curve2(systems, space2) {
     proj2 = my_curve.make_project(axe2);
     axe3 = space2.make_axes('polar');
     proj3 = my_curve.make_project(axe3);
+    console.log(my_curve);
+    proj3.eps = 0.5;
+    proj3.p = 15;
+    console.log(my_curve);
     //var test_e = [0.5, 1, 1.5];
     //var test_p = [0.1, 0.5, 1, 2];
     //for (i = 0; i < test_e.length; i ++) {
@@ -385,25 +389,25 @@ function test_curve2(systems, space2) {
     //
     //}
 
-    for (i = -2; i < 3; i ++) {
-        for (j = -2; j < 3; j ++) {
-            for (k = -2; k < 3; k++) {
-                proj2.setEquation({
-                    A: i,
-                    B: j,
-                    C: 0,
-                    D: 0,
-                    E: 0,
-                    F: k
-                });
-                console.log("model", my_curve);
-                console.log("1", proj.getEquation().A, proj.getEquation().B, proj.getEquation().F);
-                console.log("2", proj2.getEquation().A, proj2.getEquation().B, proj2.getEquation().F);
-                console.log("3", proj3.getEquation().p, proj3.getEquation().e);
-            }
-        }
-
-    }
-    console.log("end")
+    //for (i = -2; i < 3; i ++) {
+    //    for (j = -2; j < 3; j ++) {
+    //        for (k = -2; k < 3; k++) {
+    //            proj2.setEquation({
+    //                A: i,
+    //                B: j,
+    //                C: 0,
+    //                D: 0,
+    //                E: 0,
+    //                F: k
+    //            });
+    //            console.log("model", my_curve);
+    //            console.log("1", proj.getEquation().A, proj.getEquation().B, proj.getEquation().F);
+    //            console.log("2", proj2.getEquation().A, proj2.getEquation().B, proj2.getEquation().F);
+    //            console.log("3", proj3.getEquation().p, proj3.getEquation().e);
+    //        }
+    //    }
+    //
+    //}
+    //console.log("end")
 
 }
